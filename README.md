@@ -9,6 +9,17 @@ La base de donnée stockera les données des utilisateurs (pseudo, mot de passe)
 
 ________________________________________________________________________________________________________________________________________________________________________
 
-Il est nécessaire dans un premier temps de créer une interface graphique très simple, dans laquelle on va générer des carrés. Le seul évènement qui sera pris en charge au début sera le clic de souris sur ces carrés. Si l'utilisateur clique sur l'iun d'eux, alors le carré devra changer de couleur.
-A terme, il faudra charger des images dans SQL et les remplacer selon l'état du carré --> cliqué ou non.
-Dans un second temps je pense qu'il serait urgent de trouver comment rajouter le caractère aléatoire de l'état du carré, d'abord sans avoir à demander à l'utilsateur le coefficiant de gain/perte, on pourra l'imposer manuellement (50% par exemple) et faire le test pour vérifier qu'une fois qu'un carré rouge est cliqué , il devienne soit bleu à 50% ou jaune à 50% par exemple.
+Etapes effecutées :
+
+1- Carrés retournables --> Enzo
+2- Composante aléatoire stocké dans un tableau --> Ryan
+3- GUI basique avec espace pour 25 carrés + sous menus --> Bastien
+4- Importation images --> Enzo
+5- Affichage de texte pour sous menus --> Bastien
+6- Implémentation de l'aléatoire et des images dans le GUI --> Enzo+Bastien
+
+
+Etapes en cours :
+
+7- Fichier config, fichier txt et algo de calculs de la côte en cours --> Ryan?
+8- Début du jeu avec bouton play et fin du jeu avec soit bouton stop ou lose --> Enzo (en cours)
