@@ -91,7 +91,11 @@ int main(int argc, char *argv[]) {
 
                     // Vérifier si le clic a eu lieu dans l'un des carrés
                     if (game_started) {
-                        check_square_click(window, &grid, x, y);
+                        int stop = check_square_click(window, &grid, x, y);
+                        if(stop) {
+                            game_started = 0;
+                            reveal_all(window, &grid);
+                        }
                     }
             }
         }
@@ -103,6 +107,9 @@ int main(int argc, char *argv[]) {
     // Nettoyer les ressources utilisées
     destroy_window(window);
     SDL_Quit();
+
+    // Libere la grille
+    free_grid(&grid);
 
     return 0;
 }

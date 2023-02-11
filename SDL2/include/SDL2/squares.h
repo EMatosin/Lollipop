@@ -10,6 +10,8 @@
 #define NUM_IMAGES 5
 #define VERSO 0
 #define RECTO 1
+#define STOP 1
+#define CONTINUE 0
 
 char *image_files[NUM_IMAGES] = {"images/win.bmp","images/lose.bmp","images/play.bmp","images/stop.bmp","images/start.bmp"};
 
@@ -41,6 +43,13 @@ void init_grid(GameGrid* grid) {
     }
 }
 
+void free_grid(GameGrid* grid) {
+    for(int i = 0; NUM_LOLLIPOP; i++) {
+        free(grid->grid[i]);
+    }
+    free(grid);
+}
+
 void draw_squares(Window *window, GameGrid* grid, const char* file_path) {
     SDL_Surface* picture_origin = SDL_LoadBMP(file_path);
     SDL_Texture* texture_origin = SDL_CreateTextureFromSurface(window->renderer, picture_origin);
@@ -50,7 +59,7 @@ void draw_squares(Window *window, GameGrid* grid, const char* file_path) {
     }
 }
 
-void check_square_click(Window* window, GameGrid* grid, int x_click, int y_click) {
+int check_square_click(Window* window, GameGrid* grid, int x_click, int y_click) {
     for(int i = 0; i < NUM_LOLLIPOP; i++) {
         GameSquare* current_square = grid->grid[i];
         if (x_click >= current_square->square.x && x_click <= current_square->square.x + SQUARE_SIZE &&
@@ -61,7 +70,34 @@ void check_square_click(Window* window, GameGrid* grid, int x_click, int y_click
                 SDL_Surface* picture = SDL_LoadBMP(image_files[LOSE]);
                 SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                 SDL_RenderCopy(window->renderer, texture, NULL, &current_square->square);
-                break;
+                
+                return STOP;
+            } 
+            else {
+                SDL_Surface* picture = SDL_LoadBMP(image_files[WIN]);
+                SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
+                SDL_RenderCopy(window->renderer, texture, NULL, &current_square->square);
+
+                return CONTINUE;
+            }
+
+            current_square->state = RECTO;
+            SDL_RenderPresent(window->renderer);
+        }
+    }
+
+    return CONTINUE;
+}
+
+void reveal_all(Window* window, GameGrid* grid) {
+    for(int i = 0; i < NUM_LOLLIPOP; i++) {
+        GameSquare* current_square = grid->grid[i];
+
+        if(current_square->state == VERSO) {
+            if(tab[i] == LOSE) {
+                SDL_Surface* picture = SDL_LoadBMP(image_files[LOSE]);
+                SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
+                SDL_RenderCopy(window->renderer, texture, NULL, &current_square->square);
             } 
             else {
                 SDL_Surface* picture = SDL_LoadBMP(image_files[WIN]);
