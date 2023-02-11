@@ -45,7 +45,13 @@ void create_layout(Window *window, GameButtons* buttons){
     SDL_RenderFillRect(window->renderer, &buttons->bet_button);
 }
 
-void finish_game(Window *window, GameButtons* buttons, GameGrid* grid) {
+void restart_game_layout(Window *window, GameButtons* buttons, GameGrid* grid, int nb_sticks) {
+    draw_squares(window, grid, image_files[4]);
+    draw_cash_out(window, &buttons->bet_button);
+    randomizer(grid, nb_sticks);
+}
+
+void finish_game_layout(Window *window, GameButtons* buttons, GameGrid* grid) {
     reveal_all(window, grid);
     draw_bet(window, &buttons->bet_button);
 }
