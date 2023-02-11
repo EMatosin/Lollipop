@@ -8,6 +8,7 @@
 #include <time.h>
 #include "SDL2/include/SDL2/window.h"
 #include "SDL2/include/SDL2/squares.h"
+#include "SDL2/include/SDL2/bet.h"
 //#include "C:\Users\emato\OneDrive\Bureau\Lollipop\SDL2\include\SDL2\game_started.h"
 #include "SDL2/include/SDL2/randomizer.h"
 #include "SDL2/include/SDL2/background.h"
@@ -41,16 +42,7 @@ int main(int argc, char *argv[]) {
     draw_squares(window, &grid, image_files[4]);
 
     // Affichage du menu BET
-    TTF_Font * font = TTF_OpenFont("PurpleSmile.ttf", 55);
-	SDL_Color blackcolor = {0, 0, 0};
-	SDL_Surface * betbtnsurf = TTF_RenderText_Blended(font, "BET", blackcolor);
-	int texW = 0;
-	int texH = 0;
-	SDL_Texture * betbtntext = SDL_CreateTextureFromSurface(window->renderer, betbtnsurf);
-	SDL_QueryTexture(betbtntext, NULL, NULL, &texW, &texH);
-	SDL_Rect dstrect = {WIDTH/2-WIDTH/10,HEIGHT/2+HEIGHT/4+HEIGHT/12, texW, texH};
-	SDL_RenderCopy(window->renderer, betbtntext, NULL, &dstrect);
-	SDL_RenderPresent(window->renderer);
+    draw_bet(window, &buttons.bet_button);
             
     randomizer();
 
@@ -61,7 +53,7 @@ int main(int argc, char *argv[]) {
         int x;
         int y;
         while (SDL_PollEvent(&event)) {
-            switch(event.type){
+            switch(event.type) {
                 case SDL_QUIT: // Gérer les événements de fermeture de fenêtre
                     running=0;
                     break;
@@ -72,6 +64,16 @@ int main(int argc, char *argv[]) {
                     y = event.button.y;
 
                     // Vérifier si le clic a eu lieu sur le bouton BET
+                    if (check_bet_button_click(window, &buttons.bet_button, x, y)) {
+                        if (game_started) {
+                            finish_game(window, &buttons, &grid);
+                            game_started = 0;
+                        } else {
+                            draw_cash_out(window, &buttons.bet_button);
+
+                            game_started = 1;
+                        }
+                    }
                                  
 
                     //event_started(window);
@@ -80,8 +82,8 @@ int main(int argc, char *argv[]) {
                     if (game_started) {
                         int stop = check_square_click(window, &grid, x, y);
                         if(stop) {
+                            finish_game(window, &buttons, &grid);
                             game_started = 0;
-                            reveal_all(window, &grid);
                         }
                     }
             }

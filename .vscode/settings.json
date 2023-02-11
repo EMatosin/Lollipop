@@ -5,6 +5,7 @@
         "window.h": "c",
         "squares.h": "c",
         "randomizer.h": "c",
-        "background.h": "c"
+        "background.h": "c",
+        "bet.h": "c"
     }
 }

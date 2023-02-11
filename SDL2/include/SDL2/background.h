@@ -3,6 +3,7 @@
 
 #include "window.h"
 #include "squares.h"
+#include "bet.h"
 
 typedef struct {
     SDL_Rect bet_button;
@@ -42,6 +43,11 @@ void create_layout(Window *window, GameButtons* buttons){
     buttons->bet_button.h = HEIGHT/10;
     SDL_SetRenderDrawColor(window->renderer, 161, 241, 42, 255);
     SDL_RenderFillRect(window->renderer, &buttons->bet_button);
+}
+
+void finish_game(Window *window, GameButtons* buttons, GameGrid* grid) {
+    reveal_all(window, grid);
+    draw_bet(window, &buttons->bet_button);
 }
 
 #endif
