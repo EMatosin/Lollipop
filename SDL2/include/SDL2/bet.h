@@ -1,0 +1,48 @@
+#ifndef BET_H
+#define BET_H
+
+#include "SDL_ttf.h"
+#include "window.h"
+
+void draw_bet(Window* window, SDL_Rect* bet_button) {
+    // Affichage du menu BET
+    SDL_SetRenderDrawColor(window->renderer, 161, 241, 42, 255);
+    SDL_RenderFillRect(window->renderer, bet_button);
+    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 55);
+	SDL_Color blackcolor = {0, 0, 0};
+	SDL_Surface* betbtnsurf = TTF_RenderText_Blended(font, "BET", blackcolor);
+	int texW = 0;
+	int texH = 0;
+	SDL_Texture* betbtntext = SDL_CreateTextureFromSurface(window->renderer, betbtnsurf);
+	SDL_QueryTexture(betbtntext, NULL, NULL, &texW, &texH);
+	SDL_Rect dstrect = {WIDTH/2-WIDTH/10,HEIGHT/2+HEIGHT/4+HEIGHT/12, texW, texH};
+	SDL_RenderCopy(window->renderer, betbtntext, NULL, &dstrect);
+	SDL_RenderPresent(window->renderer);
+}
+
+void draw_cash_out(Window* window, SDL_Rect* bet_button) {
+    // Affichage du menu CASHOUT
+    SDL_SetRenderDrawColor(window->renderer, 200, 0, 0, 255);
+    SDL_RenderFillRect(window->renderer, bet_button);
+    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 55);
+    SDL_Color whitecolor = {255, 255, 255};
+    SDL_Surface* betbtnsurf = TTF_RenderText_Blended(font, "CASH OUT", whitecolor);
+    int texW = 0;
+	int texH = 0;
+    SDL_Texture * betbtntext = SDL_CreateTextureFromSurface(window->renderer, betbtnsurf);
+    SDL_QueryTexture(betbtntext, NULL, NULL, &texW, &texH);
+    SDL_Rect dstrect = {WIDTH/2-WIDTH/10,HEIGHT/2+HEIGHT/4+HEIGHT/12, texW, texH};
+    SDL_RenderCopy(window->renderer, betbtntext, NULL, &dstrect);
+    SDL_RenderPresent(window->renderer);  
+}
+
+int check_bet_button_click(Window* window, SDL_Rect* bet_button, int x_click, int y_click) {
+    if (x_click >= bet_button->x && x_click <= bet_button->x + bet_button->w &&
+        y_click >= bet_button->y && y_click <= bet_button->y + bet_button->h) {
+        return 1;
+    }
+
+    return 0;
+}
+
+#endif

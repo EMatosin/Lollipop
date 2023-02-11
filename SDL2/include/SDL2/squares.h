@@ -9,7 +9,7 @@
 #define NUM_LOLLIPOP 25
 #define WIN 0
 #define LOSE 1
-#define SQUARE_SIZE 50
+#define SQUARE_SIZE 100
 #define GRID_WIDTH 5
 #define GRID_HEIGHT 5
 #define NUM_IMAGES 5
@@ -78,6 +78,7 @@ void draw_squares(Window *window, GameGrid* grid, const char* file_path) {
     for(int i = 0; i < NUM_LOLLIPOP; i++) {
         grid->grid[i]->state = VERSO;
         SDL_RenderCopy(window->renderer, texture_origin, NULL, &(grid->grid[i]->square));
+        SDL_RenderPresent(window->renderer);
     }
 }
 
@@ -88,23 +89,23 @@ int check_square_click(Window* window, GameGrid* grid, int x_click, int y_click)
             y_click >= current_square->square.y && y_click <= current_square->square.y + SQUARE_SIZE && 
             current_square->state == VERSO) {
 
+            current_square->state = RECTO;
+
             if(current_square->score == LOSE) {
-                SDL_Surface* picture = SDL_LoadBMP(image_files[LOSE]);
+                SDL_Surface* picture = SDL_LoadBMP("images/lose.bmp");
                 SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                 SDL_RenderCopy(window->renderer, texture, NULL, &current_square->square);
+                SDL_RenderPresent(window->renderer);
                 
                 return STOP;
-            } 
-            else {
-                SDL_Surface* picture = SDL_LoadBMP(image_files[WIN]);
+            } else {
+                SDL_Surface* picture = SDL_LoadBMP("images/win.bmp");
                 SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                 SDL_RenderCopy(window->renderer, texture, NULL, &current_square->square);
+                SDL_RenderPresent(window->renderer);
 
                 return CONTINUE;
             }
-
-            current_square->state = RECTO;
-            SDL_RenderPresent(window->renderer);
         }
     }
 
@@ -117,12 +118,12 @@ void reveal_all(Window* window, GameGrid* grid) {
 
         if(current_square->state == VERSO) {
             if(current_square->score == LOSE) {
-                SDL_Surface* picture = SDL_LoadBMP(image_files[LOSE]);
+                SDL_Surface* picture = SDL_LoadBMP("images/lose.bmp");
                 SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                 SDL_RenderCopy(window->renderer, texture, NULL, &current_square->square);
             } 
             else {
-                SDL_Surface* picture = SDL_LoadBMP(image_files[WIN]);
+                SDL_Surface* picture = SDL_LoadBMP("images/win.bmp");
                 SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                 SDL_RenderCopy(window->renderer, texture, NULL, &current_square->square);
             }

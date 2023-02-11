@@ -40,7 +40,6 @@ int main(int argc, char *argv[]) {
     GameButtons buttons;
     create_layout(window, &buttons);
     draw_squares(window, &grid, image_files[4]);
-    draw_bet(window, &buttons.bet_button);
     randomizer(&grid, nb_sticks);
 
     // Boucle principale pour gérer les événements
@@ -67,7 +66,6 @@ int main(int argc, char *argv[]) {
                             game_started = 0;
                         } else {
                             restart_game_layout(window, &buttons, &grid, nb_sticks);
-
                             game_started = 1;
                         }
                     }

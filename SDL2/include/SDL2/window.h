@@ -3,8 +3,8 @@
 
 #include <SDL2/SDL.h>
 
-#define WIDTH 900
-#define HEIGHT 900
+#define WIDTH 1200
+#define HEIGHT 1200
 
 typedef struct
 {

@@ -41,8 +41,7 @@ void create_layout(Window *window, GameButtons* buttons){
     buttons->bet_button.y = 5*HEIGHT/6;
     buttons->bet_button.w = WIDTH/1.4;
     buttons->bet_button.h = HEIGHT/10;
-    SDL_SetRenderDrawColor(window->renderer, 161, 241, 42, 255);
-    SDL_RenderFillRect(window->renderer, &buttons->bet_button);
+    draw_bet(window, &buttons->bet_button);
 }
 
 void restart_game_layout(Window *window, GameButtons* buttons, GameGrid* grid, int nb_sticks) {

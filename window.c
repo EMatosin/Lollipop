@@ -4,7 +4,12 @@
 Window *create_window() {
     Window *window = calloc(1, sizeof(Window));
 
-    window->sdl_window = SDL_CreateWindow("Lollipop Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
+    SDL_DisplayMode DM;
+    SDL_GetCurrentDisplayMode(0, &DM);
+    int width = DM.w;
+    int height = DM.h;
+
+    window->sdl_window = SDL_CreateWindow("Lollipop Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width-100, height-100, SDL_WINDOW_SHOWN);
     if (window->sdl_window == NULL)
     {
         printf("Window could not be created! SDL_Error: %s", SDL_GetError());
