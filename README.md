@@ -11,15 +11,11 @@ ________________________________________________________________________________
 
 Etapes effecutées :
 
-1- Carrés retournables --> Enzo
-2- Composante aléatoire stocké dans un tableau --> Ryan
-3- GUI basique avec espace pour 25 carrés + sous menus --> Bastien
-4- Importation images --> Enzo
-5- Affichage de texte pour sous menus --> Bastien
-6- Implémentation de l'aléatoire et des images dans le GUI --> Enzo+Bastien
+Jeu fonctionnel, les carrés se retournent sans erreurs et cliquer sur un lose arrête le jeu en retournant toutes les cases. On peut aussi relancer une partie, ce qui va remettre les cases à l'état initial et lancer un nouveau randomizer. On peut aussi cliquer sur "Cashout" pour arrêter la game en cours.
 
 
 Etapes en cours :
 
-7- Fichier config, fichier txt et algo de calculs de la côte en cours --> Ryan?
-8- Début du jeu avec bouton play et fin du jeu avec soit bouton stop ou lose --> Enzo (en cours)
+1- Fichier config, fichier txt et algo de calculs de la côte en cours --> Ryan?
+2- Refonte de la GUI, faire un truc propre qui soit adapté à la taille de la window en cours et donc l'ensemble des sections soit symétrique
+3- 

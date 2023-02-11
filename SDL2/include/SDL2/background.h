@@ -11,29 +11,34 @@ typedef struct {
 
 // Initilisation des différentes sections
 void create_layout(Window *window, GameButtons* buttons){
-    /*background window*/
+    /*layout window*/
     SDL_Rect window_bg = {0, 0, WIDTH, HEIGHT};
-    SDL_SetRenderDrawColor(window->renderer, 135, 76, 98, 255);
-    SDL_RenderFillRect(window->renderer, &window_bg);
+    SDL_Surface* picture = SDL_LoadBMP("images/lollipop_background.bmp");
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
+    SDL_RenderCopy(window->renderer, texture, NULL, &window_bg);
+    SDL_RenderPresent(window->renderer);
+    // SDL_Rect window_bg = {0, 0, WIDTH, HEIGHT};
+    // SDL_SetRenderDrawColor(window->renderer, 0, 0, 0, 255);
+    // SDL_RenderFillRect(window->renderer, &window_bg);
 
-    /*background lollipop*/
+    /*layout lollipop*/
     SDL_Rect lollipop_bg = {WIDTH/10,HEIGHT/11,WIDTH/1.4, HEIGHT/1.6};
-    SDL_SetRenderDrawColor(window->renderer, 196, 50, 145, 255);
+    SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &lollipop_bg);
 
-    /*background gain*/
-    SDL_Rect gain_bg = {WIDTH/2, HEIGHT/50, SQUARE_SIZE*4,SQUARE_SIZE};
-    SDL_SetRenderDrawColor(window->renderer, 196, 50, 145, 255);
+    /*layout current cash*/
+    SDL_Rect gain_bg = {WIDTH/3, HEIGHT/50, SQUARE_SIZE*3,SQUARE_SIZE/1.5};
+    SDL_SetRenderDrawColor(window->renderer, 229, 138, 189, 255);
     SDL_RenderFillRect(window->renderer, &gain_bg);
 
-    /*background nblolly*/
-    SDL_Rect nblolly_bg = {WIDTH/2, 2*HEIGHT/3+HEIGHT/16, SQUARE_SIZE*5.5, SQUARE_SIZE*1.5};
-    SDL_SetRenderDrawColor(window->renderer, 196, 50, 145, 255);
+    /*layout sticks put*/
+    SDL_Rect nblolly_bg = {WIDTH/2, 2.95*HEIGHT/4, SQUARE_SIZE*3.8, SQUARE_SIZE};
+    SDL_SetRenderDrawColor(window->renderer, 229, 138, 189, 255);
     SDL_RenderFillRect(window->renderer, &nblolly_bg);
 
-    /*background nbbet*/
-    SDL_Rect nbbet_bg = {WIDTH/10, 2*HEIGHT/3+HEIGHT/16, SQUARE_SIZE*5.5, SQUARE_SIZE*1.5};
-    SDL_SetRenderDrawColor(window->renderer, 196, 50, 145, 255);
+    /*layout bet put*/
+    SDL_Rect nbbet_bg = {WIDTH/10, 2.95*HEIGHT/4, SQUARE_SIZE*3.8, SQUARE_SIZE};
+    SDL_SetRenderDrawColor(window->renderer, 229, 138, 189, 255);
     SDL_RenderFillRect(window->renderer, &nbbet_bg);
 
     /*bet button*/
