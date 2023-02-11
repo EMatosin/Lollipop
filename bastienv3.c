@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
     for (i = 0; i < NUM_LOLLIPOP; i++){
         square[i]= 0;
     }
-    //int play = 0;
+
 
 	/*backgrounds*/
 
