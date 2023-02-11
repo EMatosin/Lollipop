@@ -1,16 +1,16 @@
 #include <SDL2/SDL.h>
-#include "C:\Users\emato\OneDrive\Bureau\Lollipop\SDL2\include\SDL2\SDL_ttf.h"
+#include "SDL2/include/SDL2/SDL_ttf.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #include <math.h>
 #include <time.h>
-#include "C:\Users\emato\OneDrive\Bureau\Lollipop\SDL2\include\SDL2\window.h"
-#include "C:\Users\emato\OneDrive\Bureau\Lollipop\SDL2\include\SDL2\squares.h"
+#include "SDL2/include/SDL2/window.h"
+#include "SDL2/include/SDL2/squares.h"
 //#include "C:\Users\emato\OneDrive\Bureau\Lollipop\SDL2\include\SDL2\game_started.h"
-#include "C:\Users\emato\OneDrive\Bureau\Lollipop\SDL2\include\SDL2\randomizer.h"
-#include "C:\Users\emato\OneDrive\Bureau\Lollipop\SDL2\include\SDL2\background.h"
+#include "SDL2/include/SDL2/randomizer.h"
+#include "SDL2/include/SDL2/background.h"
 
 // Stockage des images pour éviter des perturbations au niveau des clics
 
@@ -36,7 +36,8 @@ int main(int argc, char *argv[]) {
     //int game_over = 0;
 
     // Initilisation des différentes sections
-    background(window);
+    GameButtons buttons;
+    create_layout(window, &buttons);
     draw_squares(window, &grid, image_files[4]);
 
     // Affichage du menu BET
@@ -71,21 +72,7 @@ int main(int argc, char *argv[]) {
                     y = event.button.y;
 
                     // Vérifier si le clic a eu lieu sur le bouton BET
-                    if (x >= bet_button.x && x <= bet_button.x + bet_button.w && y >= bet_button.y && y <= bet_button.y + bet_button.h) {
-                        // Affichage du menu CASHOUT
-                        SDL_SetRenderDrawColor(window->renderer, 200, 0, 0, 255);
-                        SDL_RenderFillRect(window->renderer, &bet_button);
-                        TTF_Font * font = TTF_OpenFont("PurpleSmile.ttf", 55);
-                        SDL_Color whitecolor = {255, 255, 255};
-                        SDL_Surface * betbtnsurf = TTF_RenderText_Blended(font, "CASH OUT", whitecolor);
-                        SDL_Texture * betbtntext = SDL_CreateTextureFromSurface(window->renderer, betbtnsurf);
-                        SDL_QueryTexture(betbtntext, NULL, NULL, &texW, &texH);
-                        SDL_Rect dstrect = {WIDTH/2-WIDTH/10,HEIGHT/2+HEIGHT/4+HEIGHT/12, texW, texH};
-                        SDL_RenderCopy(window->renderer, betbtntext, NULL, &dstrect);
-                        SDL_RenderPresent(window->renderer);  
-                        game_started=1;
-
-                    }                  
+                                 
 
                     //event_started(window);
 

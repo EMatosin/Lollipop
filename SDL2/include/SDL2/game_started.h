@@ -2,20 +2,65 @@
 #define GAMES_STARTED_H
 
 #include <SDL2/SDL.h>
-#include "C:\Users\emato\OneDrive\Bureau\Lollipop\SDL2\include\SDL2\window.h"
-#include "C:\Users\emato\OneDrive\Bureau\Lollipop\SDL2\include\SDL2\squares.h"
-#include "C:\Users\emato\OneDrive\Bureau\Lollipop\SDL2\include\SDL2\randomizer.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <math.h>
+#include <time.h>
+#include "SDL_ttf.h"
+#include "window.h"
+#include "squares.h"
+#include "randomizer.h"
 
 #define SQUARE_SIZE 50
 #define NUM_IMAGES 5
 
-void event_started(Window *window){
-    // Vérifier si le clic a eu lieu dans l'un des carrés                   
+int game_started = 0;
+
+void event_started(Window *window, int *square, int *perdu){
+    int running = 1;
+    while (running) {
+        SDL_Event event;
+        int x;
+        int y;
+        while (SDL_PollEvent(&event)) {
+            switch(event.type){
+                case SDL_QUIT: // Gérer les événements de fermeture de fenêtre
+                    running=0;
+                    break;
+                case SDL_MOUSEBUTTONDOWN: // Gérer les événements de clic de souris
+
+                    // Récupérer les coordonnées du clic
+                    x = event.button.x;
+                    y = event.button.y;
+
+                    // Vérifier si le clic a eu lieu sur le bouton BET
+                    if (x >= bet_button.x && x <= bet_button.x + bet_button.w && y >= bet_button.y && y <= bet_button.y + bet_button.h) {
+                        // Affichage du menu CASHOUT
+                        SDL_SetRenderDrawColor(window->renderer, 200, 0, 0, 255);
+                        SDL_RenderFillRect(window->renderer, &bet_button);
+                        TTF_Font * font = TTF_OpenFont("PurpleSmile.ttf", 55);
+                        SDL_Color whitecolor = {255, 255, 255};
+                        SDL_Surface * betbtnsurf = TTF_RenderText_Blended(font, "CASH OUT", whitecolor);
+                        SDL_Texture * betbtntext = SDL_CreateTextureFromSurface(window->renderer, betbtnsurf);
+                        SDL_QueryTexture(betbtntext, NULL, NULL, &texW, &texH);
+                        SDL_Rect dstrect = {WIDTH/2-WIDTH/10,HEIGHT/2+HEIGHT/4+HEIGHT/12, texW, texH};
+                        SDL_RenderCopy(window->renderer, betbtntext, NULL, &dstrect);
+                        SDL_RenderPresent(window->renderer);  
+                        game_started=1;
+
+                    }                  
+
+                    event_started(window);
+
+                    // Vérifier si le clic a eu lieu dans l'un des carrés                   
                     if (x >= rect0.x && x <= rect0.x + SQUARE_SIZE && y >= rect0.y && y <= rect0.y + SQUARE_SIZE && square[0] == 0 && game_started==1) {
                         if(tab[0] == 1) {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect0);
+                            break;
                         } 
                         else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
@@ -31,6 +76,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect1);
+                            break;
                         } 
                         else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
@@ -46,6 +92,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect2);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -60,6 +107,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect3);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -74,6 +122,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect4);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -88,6 +137,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect5);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -102,6 +152,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect6);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -116,6 +167,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect7);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -130,6 +182,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect8);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -145,6 +198,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect9);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -159,6 +213,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect10);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -173,6 +228,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect11);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -187,6 +243,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect12);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -201,6 +258,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect13);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -215,6 +273,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect14);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -229,6 +288,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect15);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -243,6 +303,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect16);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -257,6 +318,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect17);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -271,6 +333,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect18);
+                            break;
                         } else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
@@ -285,6 +348,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect19);
+                            break;
                         }
                         else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
@@ -300,6 +364,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect20);
+                            break;
                         }
                         else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
@@ -315,6 +380,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect21);
+                            break;
                         }
                         else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
@@ -330,11 +396,13 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect22);
+                            break;
                         }
                         else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect22);
+                            break;
                         }
                     square[22] = !square[22];
                     SDL_RenderPresent(window->renderer);
@@ -345,6 +413,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect23);
+                            break;
                         }
                         else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
@@ -361,6 +430,7 @@ void event_started(Window *window){
                             SDL_Surface* picture = SDL_LoadBMP(image_files[1]);
                             SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                             SDL_RenderCopy(window->renderer, texture, NULL, &rect24);
+                            break;
                         }
                         else {
                             SDL_Surface* picture = SDL_LoadBMP(image_files[0]);
@@ -369,7 +439,10 @@ void event_started(Window *window){
                         }
                     square[24] = !square[24];
                     SDL_RenderPresent(window->renderer);
-                    }
-}                 
+                    }     
+            }
+        }
+    }
+}
 
 #endif

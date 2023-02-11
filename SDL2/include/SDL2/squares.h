@@ -1,7 +1,7 @@
 #ifndef SQUARES_H
 #define SQUARES_H
 
-#include "C:\Users\emato\OneDrive\Bureau\Lollipop\SDL2\include\SDL2\window.h"
+#include "window.h"
 #include "randomizer.h"
 
 #define SQUARE_SIZE 50
