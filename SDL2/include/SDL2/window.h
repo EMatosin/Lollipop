@@ -3,13 +3,12 @@
 
 #include <SDL2/SDL.h>
 
-#define WIDTH 1200
-#define HEIGHT 1200
-
 typedef struct
 {
     SDL_Window *sdl_window;
     SDL_Renderer *renderer;
+    int width;
+    int height;
 } Window;
 
 Window *create_window();

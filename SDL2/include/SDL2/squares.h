@@ -32,7 +32,7 @@ typedef struct {
     int height;
 } GameGrid;
 
-void init_grid(GameGrid* grid) {
+void init_grid(GameGrid* grid, Window *window) {
     grid->grid = calloc(grid->height*grid->width, sizeof(GameSquare*));
 
     for(int i = 0; i < grid->width; i++) {
@@ -41,8 +41,8 @@ void init_grid(GameGrid* grid) {
             square->state = VERSO;
             square->square.h = SQUARE_SIZE;
             square->square.w = SQUARE_SIZE;
-            square->square.x = 2*(j+1)*WIDTH/14;
-            square->square.y = (i+1)*HEIGHT/8;
+            square->square.x = 2*(j+1)*window->width/14;
+            square->square.y = (i+1)*window->height/8;
 
             grid->grid[i*grid->height + j] = square;
         }

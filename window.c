@@ -25,7 +25,8 @@ Window *create_window() {
         SDL_Quit();
         exit(-1);
     }
-
+    window->width = width;
+    window->height = height;
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderClear(window->renderer);
     SDL_RenderPresent(window->renderer);

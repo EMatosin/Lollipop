@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     GameGrid grid;
     grid.width = GRID_WIDTH;
     grid.height = GRID_HEIGHT;
-    init_grid(&grid);
+    init_grid(&grid, window);
 
     // Variables pour déclarer l'état du jeu (en cours ou gameover)
 
