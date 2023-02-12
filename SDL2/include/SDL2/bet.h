@@ -14,6 +14,42 @@ int compteur_mise = 0;
 char *chips[32]={"1","2","3","4","5","6","7","8","9","10","15","20","25"
 ,"30","40","50","60","70","80","90","100","150","200","250","300","400","500","600","700","800","900","1000"};
 
+void draw_account(Window* window) {
+    // Affichage de l'argent en banque
+    SDL_Rect account = {window->width/3+2.5*SQUARE_SIZE, window->height/50, 1.5*SQUARE_SIZE, SQUARE_SIZE/1.5};
+    SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
+    SDL_RenderFillRect(window->renderer, &account);
+    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 50);
+	SDL_Color pink = {229, 138, 189};
+	SDL_Surface* account_surf = TTF_RenderText_Blended(font, "100", pink);
+	int texW = 0;
+	int texH = 0;
+	SDL_Texture* account_txt = SDL_CreateTextureFromSurface(window->renderer, account_surf);
+	SDL_QueryTexture(account_txt, NULL, NULL, &texW, &texH);
+	SDL_Rect dstrect = {2.2*window->width/5, window->height/70, texW, texH};
+	SDL_RenderCopy(window->renderer, account_txt, NULL, &dstrect);
+	SDL_RenderPresent(window->renderer);
+
+}
+
+void draw_odds(Window* window) {
+    // Affichage du multiplicateur
+    SDL_Rect account = {window->width/3+2.5*SQUARE_SIZE, window->height/50, 1.5*SQUARE_SIZE, SQUARE_SIZE/1.5};
+    SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
+    SDL_RenderFillRect(window->renderer, &account);
+    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 50);
+	SDL_Color pink = {229, 138, 189};
+	SDL_Surface* account_surf = TTF_RenderText_Blended(font, "100", pink);
+	int texW = 0;
+	int texH = 0;
+	SDL_Texture* account_txt = SDL_CreateTextureFromSurface(window->renderer, account_surf);
+	SDL_QueryTexture(account_txt, NULL, NULL, &texW, &texH);
+	SDL_Rect dstrect = {2.2*window->width/5, window->height/70, texW, texH};
+	SDL_RenderCopy(window->renderer, account_txt, NULL, &dstrect);
+	SDL_RenderPresent(window->renderer);
+
+}
+
 void draw_sticks(Window* window, int stick) {
     // Affichage du nombre de sticks
     SDL_Rect select_stick = {window->width/10+SQUARE_SIZE, 2.95*window->height/4, 1.8*SQUARE_SIZE, SQUARE_SIZE};

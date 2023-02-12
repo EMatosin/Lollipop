@@ -61,6 +61,9 @@ void create_layout(Window *window, GameButtons* buttons){
     SDL_RenderCopy(window->renderer, usd_txt, NULL, &dstrect2);
 	SDL_RenderPresent(window->renderer);
 
+    /*current bank account*/
+    
+
     /*layout bet put*/
     SDL_Rect bet_layout = {window->width/2, 2.95*window->height/4, SQUARE_SIZE*8, SQUARE_SIZE};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
@@ -86,7 +89,24 @@ void create_layout(Window *window, GameButtons* buttons){
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &select_layout);
 
+    /*layout odds*/
+    SDL_Rect odds_layout = {window->width/10 + 6*SQUARE_SIZE, 2.95*window->height/4, SQUARE_SIZE*3.8, SQUARE_SIZE};
+    SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
+    SDL_RenderFillRect(window->renderer, &odds_layout);
+
+    /*current odds characters*/
+	SDL_Surface* odds = TTF_RenderText_Blended(font, "Odds : X", pink);
+	int texW5 = 0;
+	int texH5 = 0;
+	SDL_Texture* odds_txt = SDL_CreateTextureFromSurface(window->renderer, odds);
+	SDL_QueryTexture(odds_txt, NULL, NULL, &texW5, &texH5);
+	SDL_Rect dstrect5 = {window->width/10 + 6.1*SQUARE_SIZE, 2.98*window->height/4, texW5, texH5};
+	SDL_RenderCopy(window->renderer, odds_txt, NULL, &dstrect5);
+	SDL_RenderPresent(window->renderer);
+
     /*current sticks menu*/
+    // draw_odds(window);
+    draw_account(window);
     draw_sticks(window,nb_sticks);
     draw_chips(window,compteur_mise);
 

@@ -1,4 +1,4 @@
-#include "C:\Users\emato\OneDrive\Bureau\Lollipop\SDL2\include\SDL2\window.h"
+#include "SDL2/include/SDL2/window.h"
 #include <stdio.h>
 
 Window *create_window() {

@@ -1,15 +1,6 @@
-#include <SDL2/SDL.h>
-#include "SDL2/include/SDL2/SDL_ttf.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <math.h>
-#include <time.h>
 #include "SDL2/include/SDL2/window.h"
 #include "SDL2/include/SDL2/squares.h"
 #include "SDL2/include/SDL2/bet.h"
-//#include "C:\Users\emato\OneDrive\Bureau\Lollipop\SDL2\include\SDL2\game_started.h"
 #include "SDL2/include/SDL2/background.h"
 
 // Stockage des images pour éviter des perturbations au niveau des clics

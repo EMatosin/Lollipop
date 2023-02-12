@@ -17,5 +17,5 @@ Jeu fonctionnel, les carrés se retournent sans erreurs et cliquer sur un lose a
 Etapes en cours :
 
 1- Fichier config, fichier txt et algo de calculs de la côte en cours --> Ryan?
-2- Refonte de la GUI, faire un truc propre qui soit adapté à la taille de la window en cours et donc l'ensemble des sections soit symétrique
+2- Compte courant à implémenter, ainsi que les odds à chaque fosi qu'on clique sur une lollipop
 3- 
