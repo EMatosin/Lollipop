@@ -63,6 +63,7 @@ int main(int argc, char *argv[]) {
                         if (!game_started) {
                             ++nb_sticks;
                             draw_sticks(window,nb_sticks);
+                            draw_odds(window,nb_sticks);
                         } else {
                         }
                     } 
@@ -71,6 +72,7 @@ int main(int argc, char *argv[]) {
                         if (!game_started) {
                             --nb_sticks;
                             draw_sticks(window,nb_sticks);
+                            draw_odds(window,nb_sticks);
                         } else {
                         }
                     }

@@ -1,10 +1,12 @@
 #ifndef BET_H
 #define BET_H
 
+#include <stdio.h>
+#include <stdlib.h>
 #include "SDL_ttf.h"
 #include "window.h"
 
-int nb_sticks = 0;
+float nb_sticks = 0.0;
 
 char *chiffres[NUM_LOLLIPOP] = {"1","2","3","4","5","6","7","8","9","10","11","12","13"
 ,"14","15","16","17","18","19","20","21","22","23","24","25"};
@@ -32,20 +34,24 @@ void draw_account(Window* window) {
 
 }
 
-void draw_odds(Window* window) {
+void draw_odds(Window* window, float stick) {
     // Affichage du multiplicateur
-    SDL_Rect account = {window->width/3+2.5*SQUARE_SIZE, window->height/50, 1.5*SQUARE_SIZE, SQUARE_SIZE/1.5};
+    char Buffer[256];    
+    ++stick;
+    float maths = 25.0/(25.0 - stick);
+    sprintf(Buffer,"%.2f",maths);
+    SDL_Rect odds = {window->width/10 + 8.5*SQUARE_SIZE,2.95*window->height/4, SQUARE_SIZE, SQUARE_SIZE};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
-    SDL_RenderFillRect(window->renderer, &account);
+    SDL_RenderFillRect(window->renderer, &odds);
     TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 50);
 	SDL_Color pink = {229, 138, 189};
-	SDL_Surface* account_surf = TTF_RenderText_Blended(font, "100", pink);
+	SDL_Surface* odds_surf = TTF_RenderText_Blended(font, Buffer, pink);
 	int texW = 0;
 	int texH = 0;
-	SDL_Texture* account_txt = SDL_CreateTextureFromSurface(window->renderer, account_surf);
-	SDL_QueryTexture(account_txt, NULL, NULL, &texW, &texH);
-	SDL_Rect dstrect = {2.2*window->width/5, window->height/70, texW, texH};
-	SDL_RenderCopy(window->renderer, account_txt, NULL, &dstrect);
+	SDL_Texture* odds_txt = SDL_CreateTextureFromSurface(window->renderer, odds_surf);
+	SDL_QueryTexture(odds_txt, NULL, NULL, &texW, &texH);
+	SDL_Rect dstrect = {window->width/10 + 8.5*SQUARE_SIZE, 2.98*window->height/4, texW, texH};
+	SDL_RenderCopy(window->renderer, odds_txt, NULL, &dstrect);
 	SDL_RenderPresent(window->renderer);
 
 }
@@ -163,7 +169,7 @@ int check_bet_button_click(Window* window, SDL_Rect* bet_button, int x_click, in
 int check_increase_button_click(Window* window, SDL_Rect* increase_button, int x_click, int y_click, int nb_sticks) {
     if (x_click >= increase_button->x && x_click <= increase_button->x + increase_button->w &&
         y_click >= increase_button->y && y_click <= increase_button->y + increase_button->h &&
-        nb_sticks<24) {
+        nb_sticks<23) {
         return 1;
     }
 

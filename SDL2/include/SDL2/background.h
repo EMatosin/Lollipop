@@ -105,10 +105,11 @@ void create_layout(Window *window, GameButtons* buttons){
 	SDL_RenderPresent(window->renderer);
 
     /*current sticks menu*/
-    // draw_odds(window);
+    
     draw_account(window);
     draw_sticks(window,nb_sticks);
     draw_chips(window,compteur_mise);
+    draw_odds(window,nb_sticks);
 
     /*bet button*/
     buttons->bet_button.x = window->width/10;
