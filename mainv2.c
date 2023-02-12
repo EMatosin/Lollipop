@@ -31,8 +31,6 @@ int main(int argc, char *argv[]) {
     init_grid(&grid, window);
 
     // Variables pour déclarer l'état du jeu (en cours ou gameover)
-
-    int nb_sticks = 12;
     int game_started = 0;
     //int game_over = 0;
 
@@ -65,13 +63,26 @@ int main(int argc, char *argv[]) {
                             finish_game_layout(window, &buttons, &grid);
                             game_started = 0;
                         } else {
-                            restart_game_layout(window, &buttons, &grid, nb_sticks);
+                            restart_game_layout(window, &buttons, &grid, nb_sticks+1);
                             game_started = 1;
                         }
-                    }
-                                 
+                    }  
 
-                    //event_started(window);
+                    if (check_increase_button_click(window, &buttons.increase_button, x, y, nb_sticks)) {
+                        if (!game_started) {
+                            ++nb_sticks;
+                            draw_sticks(window,nb_sticks);
+                        } else {
+                        }
+                    } 
+
+                    if (check_decrease_button_click(window, &buttons.decrease_button, x, y, nb_sticks)) {
+                        if (!game_started) {
+                            --nb_sticks;
+                            draw_sticks(window,nb_sticks);
+                        } else {
+                        }
+                    }                         
 
                     // Vérifier si le clic a eu lieu dans l'un des carrés
                     if (game_started) {

@@ -4,20 +4,23 @@
 #include "SDL_ttf.h"
 #include "window.h"
 
-char* chiffres = "1";
-//chiffres = {'1','2','3','4'};
+int nb_sticks = 0;
+char *chiffres [NUM_LOLLIPOP] = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25"};
 
-void draw_sticks(Window* window) {
+void draw_sticks(Window* window, int stick) {
     // Affichage du nombre de sticks
+    SDL_Rect select_stick = {window->width/10+SQUARE_SIZE, 2.95*window->height/4, 1.8*SQUARE_SIZE, SQUARE_SIZE};
+    SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
+    SDL_RenderFillRect(window->renderer, &select_stick);
     TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 100);
 	SDL_Color pink = {229, 138, 189};
-	SDL_Surface* betbtnsurf = TTF_RenderText_Blended(font, chiffres, pink);
+	SDL_Surface* sticks_surf = TTF_RenderText_Blended(font, chiffres[stick], pink);
 	int texW = 0;
 	int texH = 0;
-	SDL_Texture* betbtntext = SDL_CreateTextureFromSurface(window->renderer, betbtnsurf);
-	SDL_QueryTexture(betbtntext, NULL, NULL, &texW, &texH);
-	SDL_Rect dstrect = {window->width/10 + 1.8*SQUARE_SIZE,2.88*window->height/4, texW, texH};
-	SDL_RenderCopy(window->renderer, betbtntext, NULL, &dstrect);
+	SDL_Texture* sticks_txt = SDL_CreateTextureFromSurface(window->renderer, sticks_surf);
+	SDL_QueryTexture(sticks_txt, NULL, NULL, &texW, &texH);
+	SDL_Rect dstrect = {window->width/10 + 1.65*SQUARE_SIZE,2.88*window->height/4, texW, texH};
+	SDL_RenderCopy(window->renderer, sticks_txt, NULL, &dstrect);
 	SDL_RenderPresent(window->renderer);
 
 }
@@ -28,13 +31,13 @@ void draw_bet(Window* window, SDL_Rect* bet_button) {
     SDL_RenderFillRect(window->renderer, bet_button);
     TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 55);
 	SDL_Color white = {255, 255, 255};
-	SDL_Surface* betbtnsurf = TTF_RenderText_Blended(font, "BET", white);
+	SDL_Surface* bet_surf = TTF_RenderText_Blended(font, "BET", white);
 	int texW = 0;
 	int texH = 0;
-	SDL_Texture* betbtntext = SDL_CreateTextureFromSurface(window->renderer, betbtnsurf);
-	SDL_QueryTexture(betbtntext, NULL, NULL, &texW, &texH);
+	SDL_Texture* bet_txt = SDL_CreateTextureFromSurface(window->renderer, bet_surf);
+	SDL_QueryTexture(bet_txt, NULL, NULL, &texW, &texH);
 	SDL_Rect dstrect = {2.1*window->width/5,5.1*window->height/6, texW, texH};
-	SDL_RenderCopy(window->renderer, betbtntext, NULL, &dstrect);
+	SDL_RenderCopy(window->renderer, bet_txt, NULL, &dstrect);
 	SDL_RenderPresent(window->renderer);
 }
 
@@ -44,13 +47,13 @@ void draw_cash_out(Window* window, SDL_Rect* bet_button) {
     SDL_RenderFillRect(window->renderer, bet_button);
     TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 55);
     SDL_Color pink = {229, 138, 189};
-    SDL_Surface* betbtnsurf = TTF_RenderText_Blended(font, "CASH OUT", pink);
+    SDL_Surface* cash_surf = TTF_RenderText_Blended(font, "CASH OUT", pink);
     int texW = 0;
 	int texH = 0;
-    SDL_Texture * betbtntext = SDL_CreateTextureFromSurface(window->renderer, betbtnsurf);
-    SDL_QueryTexture(betbtntext, NULL, NULL, &texW, &texH);
+    SDL_Texture * cash_txt = SDL_CreateTextureFromSurface(window->renderer, cash_surf);
+    SDL_QueryTexture(cash_txt, NULL, NULL, &texW, &texH);
     SDL_Rect dstrect = {2*window->width/5,5.1*window->height/6, texW, texH};
-    SDL_RenderCopy(window->renderer, betbtntext, NULL, &dstrect);
+    SDL_RenderCopy(window->renderer, cash_txt, NULL, &dstrect);
     SDL_RenderPresent(window->renderer);  
 }
 
@@ -77,6 +80,26 @@ int check_bet_button_click(Window* window, SDL_Rect* bet_button, int x_click, in
         return 1;
     }
 
+    return 0;
+}
+
+int check_increase_button_click(Window* window, SDL_Rect* increase_button, int x_click, int y_click, int nb_sticks) {
+    if (x_click >= increase_button->x && x_click <= increase_button->x + increase_button->w &&
+        y_click >= increase_button->y && y_click <= increase_button->y + increase_button->h &&
+        nb_sticks<24) {
+        return 1;
+    }
+
+    return 0;
+}
+
+int check_decrease_button_click(Window* window, SDL_Rect* decrease_button, int x_click, int y_click, int nb_sticks) {
+    if (x_click >= decrease_button->x && x_click <= decrease_button->x + decrease_button->w &&
+        y_click >= decrease_button->y && y_click <= decrease_button->y + decrease_button->h &&
+        nb_sticks>0) {
+        return 1;
+        
+    } 
     return 0;
 }
 

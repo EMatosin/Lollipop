@@ -71,7 +71,7 @@ void create_layout(Window *window, GameButtons* buttons){
 
     /*current sticks menu*/
     //numbers->curr_num = {'1','2'};
-    draw_sticks(window);
+    draw_sticks(window,nb_sticks);
 
     /*bet button*/
     buttons->bet_button.x = window->width/10;
