@@ -82,6 +82,22 @@ int main(int argc, char *argv[]) {
                             draw_sticks(window,nb_sticks);
                         } else {
                         }
+                    }
+
+                    if (check_higher_bet_click(window, &buttons.higher_bet, x, y, compteur_mise)) {
+                        if (!game_started) {
+                            ++compteur_mise;
+                            draw_chips(window,compteur_mise);
+                        } else {
+                        }
+                    } 
+
+                    if (check_lower_bet_click(window, &buttons.lower_bet, x, y, compteur_mise)) {
+                        if (!game_started) {
+                            --compteur_mise;
+                            draw_chips(window,compteur_mise);
+                        } else {
+                        }
                     }                         
 
                     // Vérifier si le clic a eu lieu dans l'un des carrés

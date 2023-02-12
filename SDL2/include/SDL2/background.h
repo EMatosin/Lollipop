@@ -10,6 +10,8 @@ typedef struct {
     SDL_Rect bet_button;
     SDL_Rect increase_button;
     SDL_Rect decrease_button;
+    SDL_Rect higher_bet;
+    SDL_Rect lower_bet;
 } GameButtons;
 
 // typedef struct {
@@ -37,13 +39,13 @@ void create_layout(Window *window, GameButtons* buttons){
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &squares_layout);
 
-    /*layout current bank*/
+    /*current bank characters*/
     SDL_Rect bank_layout = {window->width/3, window->height/50, SQUARE_SIZE*6,SQUARE_SIZE/1.5};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &bank_layout);
     TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 50);
 	SDL_Color pink = {229, 138, 189};
-	SDL_Surface* bank = TTF_RenderText_Blended(font, "BANK :", pink);
+	SDL_Surface* bank = TTF_RenderText_Blended(font, "Bank :", pink);
     SDL_Surface* usd = TTF_RenderText_Blended(font, "USD", pink);
 	int texW = 0;
 	int texH = 0;
@@ -60,9 +62,24 @@ void create_layout(Window *window, GameButtons* buttons){
 	SDL_RenderPresent(window->renderer);
 
     /*layout bet put*/
-    SDL_Rect bet_layout = {window->width/2+SQUARE_SIZE*4, 2.95*window->height/4, SQUARE_SIZE*3.8, SQUARE_SIZE};
+    SDL_Rect bet_layout = {window->width/2, 2.95*window->height/4, SQUARE_SIZE*8, SQUARE_SIZE};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &bet_layout);
+
+    /*current bet characters*/
+	SDL_Surface* bet = TTF_RenderText_Blended(font, "Bet :", pink);
+	int texW3 = 0;
+	int texH3 = 0;
+    int texW4 = 0;
+	int texH4 = 0;
+	SDL_Texture* bet_txt = SDL_CreateTextureFromSurface(window->renderer, bet);
+	SDL_QueryTexture(bet_txt, NULL, NULL, &texW3, &texH3);
+    SDL_QueryTexture(usd_txt, NULL, NULL, &texW4, &texH4);
+	SDL_Rect dstrect3 = {window->width/2+1.4*SQUARE_SIZE,2.98*window->height/4, texW3, texH3};
+    SDL_Rect dstrect4 = {window->width/2+5.8*SQUARE_SIZE,2.98*window->height/4, texW4, texH4};
+	SDL_RenderCopy(window->renderer, bet_txt, NULL, &dstrect3);
+    SDL_RenderCopy(window->renderer, usd_txt, NULL, &dstrect4);
+	SDL_RenderPresent(window->renderer);
 
     /*layout increase/decrease menu*/
     SDL_Rect select_layout = {window->width/10, 2.95*window->height/4, SQUARE_SIZE*3.8, SQUARE_SIZE};
@@ -70,8 +87,8 @@ void create_layout(Window *window, GameButtons* buttons){
     SDL_RenderFillRect(window->renderer, &select_layout);
 
     /*current sticks menu*/
-    //numbers->curr_num = {'1','2'};
     draw_sticks(window,nb_sticks);
+    draw_chips(window,compteur_mise);
 
     /*bet button*/
     buttons->bet_button.x = window->width/10;
@@ -80,23 +97,33 @@ void create_layout(Window *window, GameButtons* buttons){
     buttons->bet_button.h = window->height/10;
     draw_bet(window, &buttons->bet_button);
 
-    /*increase button*/
+    /*increase broccoli button*/
     buttons->increase_button.x = window->width/10;
     buttons->increase_button.y = 2.95*window->height/4;
     buttons->increase_button.w = SQUARE_SIZE;
     buttons->increase_button.h = SQUARE_SIZE;
     draw_increase(window, &buttons->increase_button);
 
-    /*decrease button*/
+    /*decrease broccoli button*/
     buttons->decrease_button.x = window->width/10+2.8*SQUARE_SIZE;
     buttons->decrease_button.y = 2.95*window->height/4;
     buttons->decrease_button.w = SQUARE_SIZE;
     buttons->decrease_button.h = SQUARE_SIZE;
     draw_decrease(window, &buttons->decrease_button);
 
+    /*increase bet button*/
+    buttons->higher_bet.x = window->width/2;
+    buttons->higher_bet.y = 2.95*window->height/4;
+    buttons->higher_bet.w = SQUARE_SIZE;
+    buttons->higher_bet.h = SQUARE_SIZE;
+    draw_higher(window, &buttons->higher_bet);
 
-
-
+    /*decrease bet button*/
+    buttons->lower_bet.x = window->width/2+7*SQUARE_SIZE;
+    buttons->lower_bet.y = 2.95*window->height/4;
+    buttons->lower_bet.w = SQUARE_SIZE;
+    buttons->lower_bet.h = SQUARE_SIZE;
+    draw_lower(window, &buttons->lower_bet);
 }
 
 void restart_game_layout(Window *window, GameButtons* buttons, GameGrid* grid, int nb_sticks) {
