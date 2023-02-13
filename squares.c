@@ -1,69 +1,103 @@
-#include "C:\Users\emato\OneDrive\Bureau\Lollipop\SDL2\include\SDL2\squares.h"
-#include <stdio.h>
+#include "SDL2\include\SDL2\squares.h"
 
-void squares(Window *window){
-    /*Carrés*/
-		/*premiere ligne*/
-    SDL_Rect rect0 = { 2*WIDTH/14, HEIGHT/8, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect1 = { 4*WIDTH/14, HEIGHT/8, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect2 = { 6*WIDTH/14, HEIGHT/8, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect3 = { 8*WIDTH/14, HEIGHT/8, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect4 = { 10*WIDTH/14, HEIGHT/8, SQUARE_SIZE, SQUARE_SIZE };
-   		/*deuxieme ligne*/
-    SDL_Rect rect5 = { 2*WIDTH/14, HEIGHT/4, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect6 = { 4*WIDTH/14, HEIGHT/4, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect7 = { 6*WIDTH/14, HEIGHT/4, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect8 = { 8*WIDTH/14, HEIGHT/4, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect9 = { 10*WIDTH/14, HEIGHT/4, SQUARE_SIZE, SQUARE_SIZE };
-    	/*troisieme ligne*/
-    SDL_Rect rect10 = { 2*WIDTH/14, HEIGHT/4+HEIGHT/8, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect11 = { 4*WIDTH/14, HEIGHT/4+HEIGHT/8, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect12 = { 6*WIDTH/14, HEIGHT/4+HEIGHT/8, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect13 = { 8*WIDTH/14, HEIGHT/4+HEIGHT/8, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect14 = { 10*WIDTH/14, HEIGHT/4+HEIGHT/8, SQUARE_SIZE, SQUARE_SIZE };
-		/*quatrieme ligne*/
-    SDL_Rect rect15 = { 2*WIDTH/14, HEIGHT/2, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect16 = { 4*WIDTH/14, HEIGHT/2, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect17 = { 6*WIDTH/14, HEIGHT/2, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect18 = { 8*WIDTH/14, HEIGHT/2, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect19 = { 10*WIDTH/14, HEIGHT/2, SQUARE_SIZE, SQUARE_SIZE };
-		/*cinquieme ligne*/
-    SDL_Rect rect20 = { 2*WIDTH/14, HEIGHT/2+HEIGHT/8, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect21 = { 4*WIDTH/14, HEIGHT/2+HEIGHT/8, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect22 = { 6*WIDTH/14, HEIGHT/2+HEIGHT/8, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect23 = { 8*WIDTH/14, HEIGHT/2+HEIGHT/8, SQUARE_SIZE, SQUARE_SIZE };
-    SDL_Rect rect24 = { 10*WIDTH/14, HEIGHT/2+HEIGHT/8, SQUARE_SIZE, SQUARE_SIZE };
-    // SDL_Rect bouton_play = { WIDTH/2, HEIGHT/4, SQUARE_SIZE, SQUARE_SIZE };
-    
-    // Initialisation des logos
-    /*Carrés*/
+void init_grid(GameGrid* grid, Window *window) {
+    grid->grid = calloc(grid->height*grid->width, sizeof(GameSquare*));
 
-    SDL_Surface* picture_origin = SDL_LoadBMP(image_files[4]);
+    for(int i = 0; i < grid->width; i++) {
+        for(int j = 0; j < grid->height; j++) {
+            GameSquare* square = malloc(sizeof(GameSquare));
+            square->state = VERSO;
+            square->square.h = SQUARE_SIZE;
+            square->square.w = SQUARE_SIZE;
+            square->square.x = 2*(j+1)*window->width/14;
+            square->square.y = (i+1)*window->height/8;
+
+            grid->grid[i*grid->height + j] = square;
+        }
+    }
+}
+
+void randomizer(GameGrid* grid, int nb_sticks) {
+    for(int i = 0; i < NUM_LOLLIPOP; i++) {
+        grid->grid[i]->score = WIN;
+    }
+
+    srand(time(NULL));
+    for(int i = 0; i < nb_sticks; i++) {
+        int tirage = rand() % NUM_LOLLIPOP;
+        while(grid->grid[tirage]->score == LOSE){
+            tirage = rand() % NUM_LOLLIPOP;
+        }
+        grid->grid[tirage]->score = LOSE;
+    }
+}
+
+void free_grid(GameGrid* grid) {
+    for(int i = 0; i < NUM_LOLLIPOP; i++) {
+        free(grid->grid[i]);
+    }
+    free(grid);
+}
+
+void draw_squares(Window *window, GameGrid* grid, const char* file_path) {
+    SDL_Surface* picture_origin = SDL_LoadBMP(file_path);
     SDL_Texture* texture_origin = SDL_CreateTextureFromSurface(window->renderer, picture_origin);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect0);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect1);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect2);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect3);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect4);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect5);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect6);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect7);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect8);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect9);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect10);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect11);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect12);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect13);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect14);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect15);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect16);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect17);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect18);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect19);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect20);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect21);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect22);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect23);
-    SDL_RenderCopy(window->renderer, texture_origin, NULL, &rect24);
-    SDL_RenderPresent(window->renderer);
+
+    for(int i = 0; i < NUM_LOLLIPOP; i++) {
+        grid->grid[i]->state = VERSO;
+        SDL_RenderCopy(window->renderer, texture_origin, NULL, &(grid->grid[i]->square));
+        SDL_RenderPresent(window->renderer);
+    }
+}
+
+int check_square_click(Window* window, GameGrid* grid, int x_click, int y_click) {
+    for(int i = 0; i < NUM_LOLLIPOP; i++) {
+        GameSquare* current_square = grid->grid[i];
+        if (x_click >= current_square->square.x && x_click <= current_square->square.x + SQUARE_SIZE &&
+            y_click >= current_square->square.y && y_click <= current_square->square.y + SQUARE_SIZE && 
+            current_square->state == VERSO) {
+
+            current_square->state = RECTO;
+
+            if(current_square->score == LOSE) {
+                SDL_Surface* picture = SDL_LoadBMP("images/lose.bmp");
+                SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
+                SDL_RenderCopy(window->renderer, texture, NULL, &current_square->square);
+                SDL_RenderPresent(window->renderer);
+                
+                return STOP;
+            } else {
+                SDL_Surface* picture = SDL_LoadBMP("images/win.bmp");
+                SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
+                SDL_RenderCopy(window->renderer, texture, NULL, &current_square->square);
+                SDL_RenderPresent(window->renderer);
+
+                return CONTINUE;
+            }
+        }
+    }
+
+    return CONTINUE;
+}
+
+void reveal_all(Window* window, GameGrid* grid) {
+    for(int i = 0; i < NUM_LOLLIPOP; i++) {
+        GameSquare* current_square = grid->grid[i];
+
+        if(current_square->state == VERSO) {
+            if(current_square->score == LOSE) {
+                SDL_Surface* picture = SDL_LoadBMP("images/lose.bmp");
+                SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
+                SDL_RenderCopy(window->renderer, texture, NULL, &current_square->square);
+            } 
+            else {
+                SDL_Surface* picture = SDL_LoadBMP("images/win.bmp");
+                SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
+                SDL_RenderCopy(window->renderer, texture, NULL, &current_square->square);
+            }
+
+            current_square->state = RECTO;
+            SDL_RenderPresent(window->renderer);
+        }
+    }
 }
