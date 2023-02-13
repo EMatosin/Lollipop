@@ -11,11 +11,14 @@ ________________________________________________________________________________
 
 Etapes effecutées :
 
-Jeu fonctionnel, les carrés se retournent sans erreurs et cliquer sur un lose arrête le jeu en retournant toutes les cases. On peut aussi relancer une partie, ce qui va remettre les cases à l'état initial et lancer un nouveau randomizer. On peut aussi cliquer sur "Cashout" pour arrêter la game en cours.
+-Jeu fonctionnel, les carrés se retournent sans erreurs et cliquer sur un lose arrête le jeu en retournant toutes les cases. -Cliquer sur "Cashout" arrête la game en cours et force le reveal de toutes les cases. 
+-On peut aussi relancer une partie, ce qui va remettre les cases à l'état initial et lancer un nouveau randomizer. 
+-A chaque cashout ou gameover, un nouvel élément se rajoute a liste chainée et stocke différentes statistiques de jeu. -Changer le nombre de broccolis modifie aussi le multiplicateur de maniere logique.
 
 
 Etapes en cours :
 
-1- Fichier config, fichier txt et algo de calculs de la côte en cours --> Ryan?
-2- Compte courant à implémenter, ainsi que les odds à chaque fosi qu'on clique sur une lollipop
-3- 
+1- Fichier config avec mot de passe et username à stocker et à demander à chaque lancement du jeu 
+2- Creation d'une nouvelle interface graphique pour se login ou sign in
+3- Compte courant à implémenter, ainsi que les odds à chaque fosi qu'on clique sur une lollipop
+4- Stocker la liste chainée dans un .txt et le récupérer au lancement du programme fichier txt
