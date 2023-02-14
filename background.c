@@ -2,7 +2,7 @@
 #include "SDL2\include\SDL2\bet.h"
 #include "SDL2\include\SDL2\SDL_ttf.h"
 
-void create_layout(Window *window, GameButtons* buttons, int nb_sticks, int mise){
+void create_layout(Window *window, GameButtons* buttons, int nb_sticks, int mise, float cash, int lollipop_found){
     /*layout window*/
     SDL_Rect window_bg = {0, 0, window->width, window->height};
     SDL_Surface* picture = SDL_LoadBMP("images/lollipop_background.bmp");
@@ -38,14 +38,11 @@ void create_layout(Window *window, GameButtons* buttons, int nb_sticks, int mise
     SDL_Texture* usd_txt = SDL_CreateTextureFromSurface(window->renderer, usd);
 	SDL_QueryTexture(bank_txt, NULL, NULL, &texW, &texH);
     SDL_QueryTexture(usd_txt, NULL, NULL, &texW2, &texH2);
-	SDL_Rect dstrect = {1.8*window->width/5,window->height/70, texW, texH};
-    SDL_Rect dstrect2 = {2.5*window->width/5,window->height/70, texW2, texH2};
+	SDL_Rect dstrect = {1.7*window->width/5,window->height/70, texW, texH};
+    SDL_Rect dstrect2 = {2.6*window->width/5,window->height/70, texW2, texH2};
 	SDL_RenderCopy(window->renderer, bank_txt, NULL, &dstrect);
     SDL_RenderCopy(window->renderer, usd_txt, NULL, &dstrect2);
 	SDL_RenderPresent(window->renderer);
-
-    /*current bank account*/
-    
 
     /*layout bet put*/
     SDL_Rect bet_layout = {window->width/2, 2.95*window->height/4, SQUARE_SIZE*8, SQUARE_SIZE};
@@ -87,11 +84,11 @@ void create_layout(Window *window, GameButtons* buttons, int nb_sticks, int mise
 	SDL_RenderCopy(window->renderer, odds_txt, NULL, &dstrect5);
 	SDL_RenderPresent(window->renderer);
 
-    /*current sticks menu*/
-    draw_account(window);
+    /*affichage des menus avec chiffres variables*/
+    draw_account(window, cash);
     draw_sticks(window, nb_sticks);
     draw_chips(window, mise);
-    draw_odds(window,nb_sticks);
+    draw_odds(window,nb_sticks, lollipop_found);
 
     /*bet button*/
     buttons->bet_button.x = window->width/10;

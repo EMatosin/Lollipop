@@ -1,5 +1,6 @@
 #include "SDL2\include\SDL2\history.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 GameHistory* create_history(int bet, int nb_sticks, int total) {
     GameHistory* hist = malloc(sizeof(GameHistory));
@@ -36,15 +37,16 @@ void free_list(GameHistory* head) {
     } while (current != NULL);
 }
 
-void iterate(GameHistory* head) {
-    if (head == NULL) {
-        return;
-    }
+//pour ecrire dans le .txt chaque chainons de la liste chainée a la fin du programme
+// void iterate(GameHistory* head) {   
+//     if (head == NULL) {
+//         return;
+//     }
 
-    GameHistory* current = head;
-    while (current != NULL) {
-        // Ta fonction
+//     GameHistory* current = head;
+//     while (current != NULL) {
+//         // Ta fonction
 
-        current = current->next;
-    }
-}
+//         current = current->next;
+//     }
+// }

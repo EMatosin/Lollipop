@@ -4,14 +4,18 @@
 #include "SDL2\include\SDL2\window.h"
 #include "SDL2\include\SDL2\bet.h"
 
-void draw_account(Window* window) {
+void draw_account(Window* window, float cash) {
     // Affichage de l'argent en banque
-    SDL_Rect account = {window->width/3+2.5*SQUARE_SIZE, window->height/50, 1.5*SQUARE_SIZE, SQUARE_SIZE/1.5};
+    SDL_Rect account = {window->width/3+2.3*SQUARE_SIZE, window->height/50, 2.3*SQUARE_SIZE, SQUARE_SIZE/1.5};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &account);
     TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 50);
 	SDL_Color pink = {229, 138, 189};
-	SDL_Surface* account_surf = TTF_RenderText_Blended(font, "100", pink);
+
+    char buffer[3];
+    sprintf(buffer,"%.2f",cash);
+
+	SDL_Surface* account_surf = TTF_RenderText_Blended(font, buffer, pink);
 	int texW = 0;
 	int texH = 0;
 	SDL_Texture* account_txt = SDL_CreateTextureFromSurface(window->renderer, account_surf);
@@ -22,16 +26,19 @@ void draw_account(Window* window) {
 
 }
 
-void draw_odds(Window* window, int stick) {
+void draw_odds(Window* window, int stick, int lollipop_found) {
     // Affichage du multiplicateur
-    char buffer[256];
-    float maths = 25.0/(25.0 - (float)stick);
-    sprintf(buffer,"%.2f",maths);
+    
     SDL_Rect odds = {window->width/10 + 8.5*SQUARE_SIZE,2.95*window->height/4, SQUARE_SIZE, SQUARE_SIZE};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &odds);
     TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 50);
 	SDL_Color pink = {229, 138, 189};
+
+    char buffer[3];
+    float maths = 25.0/(25.0 - (float)stick - lollipop_found);
+    sprintf(buffer,"%.2f",maths);
+
 	SDL_Surface* odds_surf = TTF_RenderText_Blended(font, buffer, pink);
 	int texW = 0;
 	int texH = 0;

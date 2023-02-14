@@ -3,9 +3,9 @@
 
 #include "squares.h"
 
-void draw_account(Window* window);
+void draw_account(Window* window, float cash);
 
-void draw_odds(Window* window, int stick);
+void draw_odds(Window* window, int stick, int lollipop_found);
 
 void draw_sticks(Window* window, int stick);
 

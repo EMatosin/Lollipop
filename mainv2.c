@@ -17,23 +17,26 @@ int main(int argc, char *argv[]) {
 	/* TTF INIT */
 	TTF_Init();
 
-    // Variables pour stocker l'état des carrés (s'ils sont retournés ou non)
+    // Stockage de l'état de la grille ( 25 carrés ) 
     GameGrid grid;
     grid.width = GRID_WIDTH;
     grid.height = GRID_HEIGHT;
     init_grid(&grid, window);
 
-    // Variables pour déclarer l'état du jeu (en cours ou gameover)
+    // Variables pour déclarer l'état du jeu
     int game_started = 0;
     int nb_sticks = 1;
     int compteur_mise = 0;
-    int* chips[32]={1,2,3,4,5,6,7,8,9,10,15,20,25,30,40,50,60,70,80,90,100,150,200,250,300,400,500,600,700,800,900,1000};
-    GameHistory* head = NULL;
-    GameHistory* tail = NULL;
+    float cash = 100;
+    int chiffres[]={1,2,3,4,5,6,7,8,9,10,15,20,25,30,40,50,60,70,80,90,100,150,200,250,300,400,500,600,700,800,900,1000};
+    int* chips = chiffres;
+    int lollipop_found = 0;
+    GameHistory* head = NULL; // Initialisation de la liste chainée
+    GameHistory* tail = NULL; // Initialisation de la liste chainée
 
     // Initilisation des différentes sections
     GameButtons buttons;
-    create_layout(window, &buttons, nb_sticks, chips[compteur_mise]);
+    create_layout(window, &buttons, nb_sticks, chips[compteur_mise], cash, lollipop_found);
     draw_squares(window, &grid, "images/start.bmp");
     randomizer(&grid, nb_sticks);
 
@@ -58,38 +61,43 @@ int main(int argc, char *argv[]) {
                     if (check_bet_button_click(window, &buttons.bet_button, x, y)) {
                         if (game_started) {
                             finish_game_layout(window, &buttons, &grid);
+                            cash=cash+chips[compteur_mise];
+                            draw_account(window, cash);
                             update_history(&head, &tail, chips[compteur_mise], nb_sticks, 100);
+                            lollipop_found = 0;
                             game_started = 0;
+                        
                         } else {
+                            cash=cash-chips[compteur_mise];
+                            draw_account(window, cash);
                             restart_game_layout(window, &buttons, &grid, nb_sticks);
                             game_started = 1;
                         }
                     }  
-
+                    // Vérifier si le clic a eu lieu sur le bouton + des broccolis
                     if (check_increase_button_click(window, &buttons.increase_button, x, y, nb_sticks)) {
                         if (!game_started) {
                             ++nb_sticks;
                             draw_sticks(window,nb_sticks);
-                            draw_odds(window,nb_sticks);
+                            draw_odds(window,nb_sticks,lollipop_found);
                         }
                     } 
-
+                    // Vérifier si le clic a eu lieu sur le bouton - des broccolis
                     if (check_decrease_button_click(window, &buttons.decrease_button, x, y, nb_sticks)) {
                         if (!game_started) {
                             --nb_sticks;
                             draw_sticks(window,nb_sticks);
-                            draw_odds(window,nb_sticks);
+                            draw_odds(window,nb_sticks,lollipop_found);
                         }
                     }
-
+                    // Vérifier si le clic a eu lieu sur le bouton + de la mise
                     if (check_higher_bet_click(window, &buttons.higher_bet, x, y, compteur_mise)) {
                         if (!game_started) {
                             ++compteur_mise;
                             draw_chips(window,chips[compteur_mise]);
-                        } else {
                         }
                     } 
-
+                    // Vérifier si le clic a eu lieu sur le bouton - de la mise
                     if (check_lower_bet_click(window, &buttons.lower_bet, x, y, compteur_mise)) {
                         if (!game_started) {
                             --compteur_mise;
@@ -99,18 +107,24 @@ int main(int argc, char *argv[]) {
 
                     // Vérifier si le clic a eu lieu dans l'un des carrés
                     if (game_started) {
-                        int stop = check_square_click(window, &grid, x, y);
+                        int stop = check_square_click(window, &grid, x, y,lollipop_found,nb_sticks);
+                        // if (!stop) {
+                        //     ++lollipop_found; 
+                        //     draw_odds(window,nb_sticks,lollipop_found);
+                        // }
+                       
                         if (stop) {
                             finish_game_layout(window, &buttons, &grid);
+                            lollipop_found = 0;
                             update_history(&head, &tail, chips[compteur_mise], nb_sticks, 100);
                             game_started = 0;
                         }
                     }
             }
         }
+
     // Afficher l'écran
     SDL_RenderPresent(window->renderer);
-    
     }
 
     // Nettoyer les ressources utilisées

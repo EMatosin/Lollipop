@@ -14,7 +14,7 @@ typedef struct {
 } GameButtons;
 
 // Initilisation des différentes sections
-void create_layout(Window *window, GameButtons* buttons, int nb_sticks, int compteur_mise);
+void create_layout(Window *window, GameButtons* buttons, int nb_sticks, int compteur_mise, float cash, int lollipop_found);
 
 void restart_game_layout(Window *window, GameButtons* buttons, GameGrid* grid, int nb_sticks);
 
