@@ -27,7 +27,8 @@ int main(int argc, char *argv[]) {
     int game_started = 0;
     int nb_sticks = 1;
     int compteur_mise = 0;
-    float cash = 100;
+    float odds;
+    float cash = 100.0;
     int chiffres[]={1,2,3,4,5,6,7,8,9,10,15,20,25,30,40,50,60,70,80,90,100,150,200,250,300,400,500,600,700,800,900,1000};
     int* chips = chiffres;
     int lollipop_found = 0;
@@ -60,12 +61,23 @@ int main(int argc, char *argv[]) {
                     // Vérifier si le clic a eu lieu sur le bouton BET
                     if (check_bet_button_click(window, &buttons.bet_button, x, y)) {
                         if (game_started) {
-                            finish_game_layout(window, &buttons, &grid);
-                            cash=cash+chips[compteur_mise];
-                            draw_account(window, cash);
-                            update_history(&head, &tail, chips[compteur_mise], nb_sticks, 100);
-                            lollipop_found = 0;
-                            game_started = 0;
+                            if (lollipop_found==0){
+                                finish_game_layout(window, &buttons, &grid);
+                                cash=cash+chips[compteur_mise];
+                                draw_account(window, cash);
+                                update_history(&head, &tail, chips[compteur_mise], nb_sticks, 100);
+                                lollipop_found = 0;
+                                game_started = 0;   
+                            }
+                            else{
+                                finish_game_layout(window, &buttons, &grid);
+                                cash=cash+chips[compteur_mise]*odds;
+                                draw_account(window, cash);
+                                update_history(&head, &tail, chips[compteur_mise], nb_sticks, 100);
+                                lollipop_found = 0;
+                                game_started = 0;   
+                            }
+                            
                         
                         } else {
                             cash=cash-chips[compteur_mise];
@@ -110,7 +122,7 @@ int main(int argc, char *argv[]) {
                         int stop = check_square_click(window, &grid, x, y,lollipop_found,nb_sticks);
                         if (stop==CONTINUE) {
                             ++lollipop_found; 
-                            draw_odds(window,nb_sticks,lollipop_found);
+                            odds = draw_odds(window,nb_sticks,lollipop_found);
                         }
                        
                         if (stop==STOP) {

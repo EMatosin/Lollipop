@@ -26,7 +26,7 @@ void draw_account(Window* window, float cash) {
 
 }
 
-void draw_odds(Window* window, int stick, int lollipop_found) {
+float draw_odds(Window* window, int stick, int lollipop_found) {
     // Affichage du multiplicateur
     
     SDL_Rect odds = {window->width/10 + 8.5*SQUARE_SIZE,2.95*window->height/4, SQUARE_SIZE, SQUARE_SIZE};
@@ -47,6 +47,8 @@ void draw_odds(Window* window, int stick, int lollipop_found) {
 	SDL_Rect dstrect = {window->width/10 + 8.5*SQUARE_SIZE, 2.98*window->height/4, texW, texH};
 	SDL_RenderCopy(window->renderer, odds_txt, NULL, &dstrect);
 	SDL_RenderPresent(window->renderer);
+
+    return maths;
 
 }
 

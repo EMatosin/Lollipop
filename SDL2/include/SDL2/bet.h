@@ -5,7 +5,7 @@
 
 void draw_account(Window* window, float cash);
 
-void draw_odds(Window* window, int stick, int lollipop_found);
+float draw_odds(Window* window, int stick, int lollipop_found);
 
 void draw_sticks(Window* window, int stick);
 
