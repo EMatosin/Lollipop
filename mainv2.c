@@ -108,12 +108,12 @@ int main(int argc, char *argv[]) {
                     // Vérifier si le clic a eu lieu dans l'un des carrés
                     if (game_started) {
                         int stop = check_square_click(window, &grid, x, y,lollipop_found,nb_sticks);
-                        // if (!stop) {
-                        //     ++lollipop_found; 
-                        //     draw_odds(window,nb_sticks,lollipop_found);
-                        // }
+                        if (stop==CONTINUE) {
+                            ++lollipop_found; 
+                            draw_odds(window,nb_sticks,lollipop_found);
+                        }
                        
-                        if (stop) {
+                        if (stop==STOP) {
                             finish_game_layout(window, &buttons, &grid);
                             lollipop_found = 0;
                             update_history(&head, &tail, chips[compteur_mise], nb_sticks, 100);

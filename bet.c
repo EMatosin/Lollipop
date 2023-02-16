@@ -158,7 +158,6 @@ void draw_lower(Window* window, SDL_Rect* lower_bet) {
     SDL_RenderPresent(window->renderer);
 }
 
-
 int check_bet_button_click(Window* window, SDL_Rect* bet_button, int x_click, int y_click) {
     if (x_click >= bet_button->x && x_click <= bet_button->x + bet_button->w &&
         y_click >= bet_button->y && y_click <= bet_button->y + bet_button->h) {

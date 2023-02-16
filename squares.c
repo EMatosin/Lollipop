@@ -1,5 +1,6 @@
 #include "SDL2\include\SDL2\squares.h"
 #include "SDL2\include\SDL2\bet.h"
+#include <stdio.h>
 
 void init_grid(GameGrid* grid, Window *window) {
     grid->grid = calloc(grid->height*grid->width, sizeof(GameSquare*));
@@ -72,8 +73,8 @@ int check_square_click(Window* window, GameGrid* grid, int x_click, int y_click,
                 SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                 SDL_RenderCopy(window->renderer, texture, NULL, &current_square->square);
                 SDL_RenderPresent(window->renderer);
-                ++lollipop_found; 
-                draw_odds(window,nb_sticks,lollipop_found);
+                // ++lollipop_found; 
+                // draw_odds(window,nb_sticks,lollipop_found);
 
 
                 return CONTINUE;
@@ -81,7 +82,7 @@ int check_square_click(Window* window, GameGrid* grid, int x_click, int y_click,
         }
     }
 
-    return CONTINUE;
+    return NOTHING;
 }
 
 void reveal_all(Window* window, GameGrid* grid) {

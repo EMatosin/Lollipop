@@ -17,6 +17,7 @@
 #define RECTO 1
 #define STOP 1
 #define CONTINUE 0
+#define NOTHING 2
 
 typedef struct {
     SDL_Rect square;
