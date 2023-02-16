@@ -22,6 +22,9 @@ Etapes effecutées :
 
 -Changer le nombre de broccolis modifie aussi le multiplicateur de maniere logique.
 
+-Cliquer sur une lollipop change le multiplicateur
+
+-Le compte en BANK est bien relié au bet et au multiplicateur, que ce soit en lançant une partie, en effectuant un cash out ou en perdant
 
 Etapes en cours :
 
@@ -30,6 +33,6 @@ Etapes en cours :
 
 2- Creation d'une nouvelle interface graphique pour se login ou sign in
 
-3- Compte courant à implémenter, ainsi que les odds à chaque fosi qu'on clique sur une lollipop
-
 4- Stocker la liste chainée dans un .txt et le récupérer au lancement du programme fichier txt
+
+5- Les valeurs en BANK peuvent être négatives, faire en sorte que le chiffre au BET ne puisse pas dépasser le cash actuellement disponible

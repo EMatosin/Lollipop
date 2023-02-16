@@ -37,7 +37,7 @@ void free_list(GameHistory* head) {
     } while (current != NULL);
 }
 
-//pour ecrire dans le .txt chaque chainons de la liste chainée a la fin du programme
+// pour ecrire dans le .txt chaque chainons de la liste chainée a la fin du programme
 // void iterate(GameHistory* head) {   
 //     if (head == NULL) {
 //         return;
