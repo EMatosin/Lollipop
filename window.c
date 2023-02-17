@@ -8,6 +8,7 @@ Window *create_window() {
     SDL_GetCurrentDisplayMode(0, &DM);
     int width = DM.w;
     int height = DM.h;
+    int square = width/25;
 
     window->sdl_window = SDL_CreateWindow("Lollipop Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width-100, height-100, SDL_WINDOW_SHOWN);
     if (window->sdl_window == NULL)
@@ -27,6 +28,7 @@ Window *create_window() {
     }
     window->width = width;
     window->height = height;
+    window->square = square;
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderClear(window->renderer);
     SDL_RenderPresent(window->renderer);

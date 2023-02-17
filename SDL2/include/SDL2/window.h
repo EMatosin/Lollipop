@@ -9,6 +9,7 @@ typedef struct
     SDL_Renderer *renderer;
     int width;
     int height;
+    int square;
 } Window;
 
 Window *create_window();

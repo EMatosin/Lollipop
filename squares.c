@@ -9,8 +9,8 @@ void init_grid(GameGrid* grid, Window *window) {
         for(int j = 0; j < grid->height; j++) {
             GameSquare* square = malloc(sizeof(GameSquare));
             square->state = VERSO;
-            square->square.h = SQUARE_SIZE;
-            square->square.w = SQUARE_SIZE;
+            square->square.h = window->square;
+            square->square.w = window->square;
             square->square.x = 2*(j+1)*window->width/14;
             square->square.y = (i+1)*window->height/8;
 
@@ -55,8 +55,8 @@ void draw_squares(Window *window, GameGrid* grid, const char* file_path) {
 int check_square_click(Window* window, GameGrid* grid, int x_click, int y_click,int lollipop_found,int nb_sticks) {
     for(int i = 0; i < NUM_LOLLIPOP; i++) {
         GameSquare* current_square = grid->grid[i];
-        if (x_click >= current_square->square.x && x_click <= current_square->square.x + SQUARE_SIZE &&
-            y_click >= current_square->square.y && y_click <= current_square->square.y + SQUARE_SIZE && 
+        if (x_click >= current_square->square.x && x_click <= current_square->square.x + window->square &&
+            y_click >= current_square->square.y && y_click <= current_square->square.y + window->square && 
             current_square->state == VERSO) {
 
             current_square->state = RECTO;

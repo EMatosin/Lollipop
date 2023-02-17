@@ -6,7 +6,7 @@
 
 void draw_account(Window* window, float cash) {
     // Affichage de l'argent en banque
-    SDL_Rect account = {window->width/3+2.3*SQUARE_SIZE, window->height/50, 2.3*SQUARE_SIZE, SQUARE_SIZE/1.5};
+    SDL_Rect account = {window->width/3+2.3*window->square, window->height/50, 2.3*window->square, window->square/1.5};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &account);
     TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 50);
@@ -29,7 +29,7 @@ void draw_account(Window* window, float cash) {
 float draw_odds(Window* window, int stick, int lollipop_found) {
     // Affichage du multiplicateur
     
-    SDL_Rect odds = {window->width/10 + 8.5*SQUARE_SIZE,2.95*window->height/4, SQUARE_SIZE, SQUARE_SIZE};
+    SDL_Rect odds = {window->width/10 + 8.5*window->square,2.95*window->height/4, window->square, window->square};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &odds);
     TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 50);
@@ -44,7 +44,7 @@ float draw_odds(Window* window, int stick, int lollipop_found) {
 	int texH = 0;
 	SDL_Texture* odds_txt = SDL_CreateTextureFromSurface(window->renderer, odds_surf);
 	SDL_QueryTexture(odds_txt, NULL, NULL, &texW, &texH);
-	SDL_Rect dstrect = {window->width/10 + 8.5*SQUARE_SIZE, 2.98*window->height/4, texW, texH};
+	SDL_Rect dstrect = {window->width/10 + 8.5*window->square, 2.98*window->height/4, texW, texH};
 	SDL_RenderCopy(window->renderer, odds_txt, NULL, &dstrect);
 	SDL_RenderPresent(window->renderer);
 
@@ -54,7 +54,7 @@ float draw_odds(Window* window, int stick, int lollipop_found) {
 
 void draw_sticks(Window* window, int stick) {
     // Affichage du nombre de sticks
-    SDL_Rect select_stick = {window->width/10+SQUARE_SIZE, 2.95*window->height/4, 1.8*SQUARE_SIZE, SQUARE_SIZE};
+    SDL_Rect select_stick = {window->width/10+window->square, 2.95*window->height/4, 1.8*window->square, window->square};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &select_stick);
     TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 100);
@@ -68,7 +68,7 @@ void draw_sticks(Window* window, int stick) {
 	int texH = 0;
 	SDL_Texture* sticks_txt = SDL_CreateTextureFromSurface(window->renderer, sticks_surf);
 	SDL_QueryTexture(sticks_txt, NULL, NULL, &texW, &texH);
-	SDL_Rect dstrect = {window->width/10 + 1.65*SQUARE_SIZE,2.88*window->height/4, texW, texH};
+	SDL_Rect dstrect = {window->width/10 + 1.65*window->square,2.88*window->height/4, texW, texH};
 	SDL_RenderCopy(window->renderer, sticks_txt, NULL, &dstrect);
 	SDL_RenderPresent(window->renderer);
 
@@ -76,7 +76,7 @@ void draw_sticks(Window* window, int stick) {
 
 void draw_chips(Window* window, int mise) {
     // Affichage du nombre de sticks
-    SDL_Rect select_chips = {window->width/2+3*SQUARE_SIZE, 2.95*window->height/4, 2.5*SQUARE_SIZE, SQUARE_SIZE};
+    SDL_Rect select_chips = {window->width/2+3*window->square, 2.95*window->height/4, 2.5*window->square, window->square};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &select_chips);
     TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 75);
@@ -90,7 +90,7 @@ void draw_chips(Window* window, int mise) {
 	int texH = 0;
 	SDL_Texture* sticks_txt = SDL_CreateTextureFromSurface(window->renderer, sticks_surf);
 	SDL_QueryTexture(sticks_txt, NULL, NULL, &texW, &texH);
-	SDL_Rect dstrect = {window->width/2+3.5*SQUARE_SIZE, 2.93*window->height/4, texW, texH};
+	SDL_Rect dstrect = {window->width/2+3.5*window->square, 2.93*window->height/4, texW, texH};
 	SDL_RenderCopy(window->renderer, sticks_txt, NULL, &dstrect);
 	SDL_RenderPresent(window->renderer);
 
