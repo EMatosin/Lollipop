@@ -26,7 +26,7 @@ void create_layout(Window *window, GameButtons* buttons, int nb_sticks, int mise
     SDL_Rect bank_layout = {window->width/3, window->height/50, window->square*6,window->square/1.5};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &bank_layout);
-    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 50);
+    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", window->square/2);
 	SDL_Color pink = {229, 138, 189};
 	SDL_Surface* bank = TTF_RenderText_Blended(font, "Bank :", pink);
     SDL_Surface* usd = TTF_RenderText_Blended(font, "USD", pink);

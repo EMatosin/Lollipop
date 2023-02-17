@@ -9,7 +9,7 @@ void draw_account(Window* window, float cash) {
     SDL_Rect account = {window->width/3+2.3*window->square, window->height/50, 2.3*window->square, window->square/1.5};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &account);
-    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 50);
+    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", window->square/2);
 	SDL_Color pink = {229, 138, 189};
 
     char buffer[3];
@@ -29,10 +29,10 @@ void draw_account(Window* window, float cash) {
 float draw_odds(Window* window, int stick, int lollipop_found) {
     // Affichage du multiplicateur
     
-    SDL_Rect odds = {window->width/10 + 8.5*window->square,2.95*window->height/4, window->square, window->square};
+    SDL_Rect odds = {window->width/10 + 8.5*window->square,2.95*window->height/4, 1.3*window->square, window->square};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &odds);
-    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 50);
+    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", window->square/2);
 	SDL_Color pink = {229, 138, 189};
 
     char buffer[3];
@@ -44,7 +44,7 @@ float draw_odds(Window* window, int stick, int lollipop_found) {
 	int texH = 0;
 	SDL_Texture* odds_txt = SDL_CreateTextureFromSurface(window->renderer, odds_surf);
 	SDL_QueryTexture(odds_txt, NULL, NULL, &texW, &texH);
-	SDL_Rect dstrect = {window->width/10 + 8.5*window->square, 2.98*window->height/4, texW, texH};
+	SDL_Rect dstrect = {window->width/10 + 8.55*window->square, 2.98*window->height/4, texW, texH};
 	SDL_RenderCopy(window->renderer, odds_txt, NULL, &dstrect);
 	SDL_RenderPresent(window->renderer);
 
@@ -57,7 +57,7 @@ void draw_sticks(Window* window, int stick) {
     SDL_Rect select_stick = {window->width/10+window->square, 2.95*window->height/4, 1.8*window->square, window->square};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &select_stick);
-    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 100);
+    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", window->square);
 	SDL_Color pink = {229, 138, 189};
 
     char buffer[3];    
@@ -79,7 +79,7 @@ void draw_chips(Window* window, int mise) {
     SDL_Rect select_chips = {window->width/2+3*window->square, 2.95*window->height/4, 2.5*window->square, window->square};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &select_chips);
-    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 75);
+    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", window->square);
 	SDL_Color pink = {229, 138, 189};
 
     char buffer[5];
@@ -90,7 +90,7 @@ void draw_chips(Window* window, int mise) {
 	int texH = 0;
 	SDL_Texture* sticks_txt = SDL_CreateTextureFromSurface(window->renderer, sticks_surf);
 	SDL_QueryTexture(sticks_txt, NULL, NULL, &texW, &texH);
-	SDL_Rect dstrect = {window->width/2+3.5*window->square, 2.93*window->height/4, texW, texH};
+	SDL_Rect dstrect = {window->width/2+3.5*window->square, 2.85*window->height/4, texW, texH};
 	SDL_RenderCopy(window->renderer, sticks_txt, NULL, &dstrect);
 	SDL_RenderPresent(window->renderer);
 
@@ -100,7 +100,7 @@ void draw_bet(Window* window, SDL_Rect* bet_button) {
     // Affichage du menu BET
     SDL_SetRenderDrawColor(window->renderer, 229, 138, 189, 255);
     SDL_RenderFillRect(window->renderer, bet_button);
-    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 55);
+    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", window->square/2);
 	SDL_Color white = {255, 255, 255};
 	SDL_Surface* bet_surf = TTF_RenderText_Blended(font, "BET", white);
 	int texW = 0;
@@ -116,7 +116,7 @@ void draw_cash_out(Window* window, SDL_Rect* bet_button) {
     // Affichage du menu CASHOUT
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, bet_button);
-    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", 55);
+    TTF_Font* font = TTF_OpenFont("PurpleSmile.ttf", window->square/2);
     SDL_Color pink = {229, 138, 189};
     SDL_Surface* cash_surf = TTF_RenderText_Blended(font, "CASH OUT", pink);
     int texW = 0;
