@@ -1,3 +1,6 @@
+#ifndef HISTORY_H
+#define HISTORY_H
+
 typedef struct GameHistory GameHistory;
 
 struct GameHistory {
@@ -15,3 +18,5 @@ void update_history(GameHistory** head, GameHistory** tail, int bet, int nb_stic
 void SaveGames(GameHistory* head, const char *filename);
 
 void free_list(GameHistory* head);
+
+#endif
