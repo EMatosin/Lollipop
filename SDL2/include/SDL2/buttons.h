@@ -1,5 +1,5 @@
-#ifndef BUTTONS_H
-#define BUTTONS_H
+#ifndef BET_H
+#define BET_H
 
 #include "squares.h"
 
