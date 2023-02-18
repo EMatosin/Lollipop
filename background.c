@@ -92,9 +92,9 @@ void create_layout(Window *window, GameButtons* buttons, int nb_sticks, int mise
 
     /*bet button*/
     buttons->bet_button.x = window->width/10;
-    buttons->bet_button.y = 5*window->height/6;
+    buttons->bet_button.y = 4.9*window->height/6;
     buttons->bet_button.w = window->width/1.4;
-    buttons->bet_button.h = window->height/10;
+    buttons->bet_button.h = window->height/15;
     draw_bet(window, &buttons->bet_button);
 
     /*increase broccoli button*/

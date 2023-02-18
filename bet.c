@@ -107,7 +107,7 @@ void draw_bet(Window* window, SDL_Rect* bet_button) {
 	int texH = 0;
 	SDL_Texture* bet_txt = SDL_CreateTextureFromSurface(window->renderer, bet_surf);
 	SDL_QueryTexture(bet_txt, NULL, NULL, &texW, &texH);
-	SDL_Rect dstrect = {2.1*window->width/5,5.1*window->height/6, texW, texH};
+	SDL_Rect dstrect = {2.1*window->width/5,4.95*window->height/6, texW, texH};
 	SDL_RenderCopy(window->renderer, bet_txt, NULL, &dstrect);
 	SDL_RenderPresent(window->renderer);
 }
@@ -123,7 +123,7 @@ void draw_cash_out(Window* window, SDL_Rect* bet_button) {
 	int texH = 0;
     SDL_Texture * cash_txt = SDL_CreateTextureFromSurface(window->renderer, cash_surf);
     SDL_QueryTexture(cash_txt, NULL, NULL, &texW, &texH);
-    SDL_Rect dstrect = {2*window->width/5,5.1*window->height/6, texW, texH};
+    SDL_Rect dstrect = {2*window->width/5,4.95*window->height/6, texW, texH};
     SDL_RenderCopy(window->renderer, cash_txt, NULL, &dstrect);
     SDL_RenderPresent(window->renderer);  
 }

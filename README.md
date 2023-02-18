@@ -36,3 +36,5 @@ Etapes en cours :
 4- Stocker la liste chainée dans un .txt et le récupérer au lancement du programme fichier txt
 
 5- Les valeurs en BANK peuvent être négatives, faire en sorte que le chiffre au BET ne puisse pas dépasser le cash actuellement disponible
+
+6- Essayer de mettre un ecran d'aide avec les instructions soit au debut, soit via un clic sur un bouton
