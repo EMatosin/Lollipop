@@ -1,5 +1,5 @@
 #include "SDL2\include\SDL2\squares.h"
-#include "SDL2\include\SDL2\bet.h"
+#include "SDL2\include\SDL2\buttons.h"
 #include <stdio.h>
 
 void init_grid(GameGrid* grid, Window *window) {

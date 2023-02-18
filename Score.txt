@@ -1,0 +1,50 @@
+Montant parié : 1 $
+Nombre de broccolis choisis : 1
+Multiplicateur final : X1.09
+Montant amassé : 100.09 $
+
+Montant parié : 1 $
+Nombre de broccolis choisis : 1
+Multiplicateur final : X1.14
+Montant amassé : 100.22 $
+
+Montant parié : 1 $
+Nombre de broccolis choisis : 1
+Multiplicateur final : X1.09
+Montant amassé : 99.22 $
+
+Montant parié : 1 $
+Nombre de broccolis choisis : 1
+Multiplicateur final : X1.19
+Montant amassé : 99.41 $
+
+Montant parié : 1 $
+Nombre de broccolis choisis : 1
+Multiplicateur final : X1.32
+Montant amassé : 99.73 $
+
+Montant parié : 3 $
+Nombre de broccolis choisis : 3
+Multiplicateur final : X1.19
+Montant amassé : 96.73 $
+
+Montant parié : 3 $
+Nombre de broccolis choisis : 3
+Multiplicateur final : X1.14
+Montant amassé : 93.73 $
+
+Montant parié : 3 $
+Nombre de broccolis choisis : 3
+Multiplicateur final : X1.39
+Montant amassé : 94.90 $
+
+Montant parié : 15 $
+Nombre de broccolis choisis : 3
+Multiplicateur final : X1.19
+Montant amassé : 97.75 $
+
+Montant parié : 15 $
+Nombre de broccolis choisis : 3
+Multiplicateur final : X1.19
+Montant amassé : 100.61 $
+

@@ -2,18 +2,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-GameHistory* create_history(int bet, int nb_sticks, float total) {
+GameHistory* create_history(int bet, int nb_sticks, float odds, float total) {
     GameHistory* hist = malloc(sizeof(GameHistory));
     hist->bet = bet;
     hist->nb_sticks = nb_sticks;
+    hist->odds = odds;
     hist->total = total;
     hist->next = NULL;
 
     return hist;
 }
 
-void update_history(GameHistory** head, GameHistory** tail, int bet, int nb_sticks, float total) {
-    GameHistory* hist = create_history(bet, nb_sticks, total);
+void update_history(GameHistory** head, GameHistory** tail, int bet, int nb_sticks, float odds, float total) {
+    GameHistory* hist = create_history(bet, nb_sticks, odds, total);
 
     if (*head == NULL) {
         *head = hist;
@@ -44,6 +45,7 @@ void SaveGames(GameHistory* head, const char *filename) {
         while (current != NULL) {
             fprintf(file, "Montant parié : %d $\n", current->bet);
             fprintf(file, "Nombre de broccolis choisis : %d\n", current->nb_sticks);
+            fprintf(file, "Multiplicateur final : X%.2f\n", current->odds);
             fprintf(file, "Montant amassé : %.2f $\n\n", current->total);
             current = current->next;
         }

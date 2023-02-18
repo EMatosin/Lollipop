@@ -1,5 +1,5 @@
 #include "SDL2\include\SDL2\background.h"
-#include "SDL2\include\SDL2\bet.h"
+#include "SDL2\include\SDL2\buttons.h"
 #include "SDL2\include\SDL2\SDL_ttf.h"
 
 void create_layout(Window *window, GameButtons* buttons, int nb_sticks, int mise, float cash, int lollipop_found){

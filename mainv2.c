@@ -1,6 +1,6 @@
 #include "SDL2/include/SDL2/window.h"
 #include "SDL2/include/SDL2/squares.h"
-#include "SDL2/include/SDL2/bet.h"
+#include "SDL2/include/SDL2/buttons.h"
 #include "SDL2/include/SDL2/background.h"
 #include "SDL2/include/SDL2/SDL_ttf.h"
 #include "SDL2/include/SDL2/history.h"
@@ -72,9 +72,11 @@ int main(int argc, char *argv[]) {
                                 finish_game_layout(window, &buttons, &grid);
                                 cash=cash+chips[compteur_mise]*odds;
                                 draw_account(window, cash);
-                                update_history(&head, &tail, chips[compteur_mise], nb_sticks, cash);
+                                update_history(&head, &tail, chips[compteur_mise], nb_sticks, odds, cash);
                                 lollipop_found = 0;
-                                game_started = 0;   
+                                odds = draw_odds(window,nb_sticks,lollipop_found);
+                                game_started = 0;
+
                             }
                             
                         
@@ -127,7 +129,8 @@ int main(int argc, char *argv[]) {
                         if (stop==STOP) {
                             finish_game_layout(window, &buttons, &grid);
                             lollipop_found = 0;
-                            update_history(&head, &tail, chips[compteur_mise], nb_sticks, cash);
+                            update_history(&head, &tail, chips[compteur_mise], nb_sticks, odds, cash);
+                            odds = draw_odds(window,nb_sticks,lollipop_found);
                             game_started = 0;
                         }
                     }
