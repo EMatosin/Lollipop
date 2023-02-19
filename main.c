@@ -75,9 +75,8 @@ int main(int argc, char *argv[]) {
                                 game_started = 0;
 
                             }
-                            
                         
-                        } else {
+                        } else if (chiffres[compteur_mise]<=cash) {
                             cash=cash-chips[compteur_mise];
                             draw_account(window, cash);
                             restart_game_layout(window, &buttons, &grid, nb_broccolis);
@@ -102,7 +101,7 @@ int main(int argc, char *argv[]) {
                     }
                     // Vérifier si le clic a eu lieu sur le bouton + de la mise
                     if (check_higher_bet_click(window, &buttons.higher_bet, x, y, compteur_mise)) {
-                        if (!game_started) {
+                        if (!game_started && chiffres[compteur_mise+1]<=cash) {
                             ++compteur_mise;
                             draw_chips(window,chips[compteur_mise]);
                         }
@@ -139,7 +138,7 @@ int main(int argc, char *argv[]) {
     }
 
     // Sauvegarde des différentes stats de la partie dans Score.txt
-    SaveGames(head, "Score.txt");
+    SaveGames(head, "Scores.txt");
 
     // Nettoyer les ressources utilisées
     destroy_window(window);
