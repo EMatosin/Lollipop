@@ -3,19 +3,18 @@
 #include "SDL2/include/SDL2/buttons.h"
 #include "SDL2/include/SDL2/background.h"
 #include "SDL2/include/SDL2/SDL_ttf.h"
+#include "SDL2/include/SDL2/SDL_image.h"
 #include "SDL2/include/SDL2/history.h"
-
-// Stockage des images pour éviter des perturbations au niveau des clics
-
-SDL_Surface *images[NUM_IMAGES];
 
 int main(int argc, char *argv[]) {
     // Initialiser SDL
     SDL_Init(SDL_INIT_EVERYTHING);
+    // Initialiser SDL_IMAGE
+    // IMG_Init(IMG_INIT_JPG);
     // Initialiser la fenêtre
     Window *window = create_window();
-	/* TTF INIT */
-	TTF_Init();
+	// Initialiser SDL_TTF
+    TTF_Init();
 
     // Stockage de l'état de la grille ( 25 carrés ) 
     GameGrid grid;
@@ -24,37 +23,35 @@ int main(int argc, char *argv[]) {
     init_grid(&grid, window);
 
     // Variables pour déclarer l'état du jeu
-    int game_started = 0;
-    int nb_sticks = 1;
-    int compteur_mise = 0;
-    float odds;
-    float cash = 100.0;
-    int chiffres[]={1,2,3,4,5,6,7,8,9,10,15,20,25,30,40,50,60,70,80,90,100,150,200,250,300,400,500,600,700,800,900,1000};
-    int* chips = chiffres;
-    int lollipop_found = 0;
-    GameHistory* head = NULL; // Initialisation de la liste chainée
-    GameHistory* tail = NULL; // Initialisation de la liste chainée
+    int game_started = 0; // qui permet de bloquer le clic sur les carrés notamment
+    int nb_broccolis = 1; // nombre initial de brocolis
+    int compteur_mise = 0; // compteur qui va servir pour le tableau de chiffres
+    float odds; // initialisation du multiplicateur
+    float cash = 100.0; // somme initial en banque
+    int chiffres[]={1,2,3,4,5,6,7,8,9,10,15,20,25,30,40,50,60,70,80,90,100,150,200,250,300,400,500,600,700,800,900,1000}; // toutes les mises différentes
+    int* chips = chiffres; // pour stocker les chiffres ci dessus
+    int lollipop_found = 0; // variables qui va servir pour le calcul du multiplicateur
+    GameHistory* head = NULL; // Initialisation de la tête de la liste chainée
+    GameHistory* tail = NULL; // Initialisation de la queue de la liste chainée
 
     // Initilisation des différentes sections
     GameButtons buttons;
-    create_layout(window, &buttons, nb_sticks, chips[compteur_mise], cash, lollipop_found);
+    create_layout(window, &buttons, nb_broccolis, chips[compteur_mise], cash, lollipop_found);
     draw_squares(window, &grid, "images/start.bmp");
-    randomizer(&grid, nb_sticks);
+    randomizer(&grid, nb_broccolis);
 
     // Boucle principale pour gérer les événements
     int running = 1;
     while (running) {
         SDL_Event event;
-        int x;
-        int y;
+        int x; // initialisation des coordonnées du clic en x
+        int y; // initialisation des coordonnées du clic en y
         while (SDL_PollEvent(&event)) {
             switch(event.type) {
                 case SDL_QUIT: // Gérer les événements de fermeture de fenêtre
                     running=0;
                     break;
                 case SDL_MOUSEBUTTONDOWN: // Gérer les événements de clic de souris
-
-                    // Récupérer les coordonnées du clic
                     x = event.button.x;
                     y = event.button.y;
 
@@ -72,9 +69,9 @@ int main(int argc, char *argv[]) {
                                 finish_game_layout(window, &buttons, &grid);
                                 cash=cash+chips[compteur_mise]*odds;
                                 draw_account(window, cash);
-                                update_history(&head, &tail, chips[compteur_mise], nb_sticks, odds, cash);
+                                update_history(&head, &tail, chips[compteur_mise], nb_broccolis, odds, cash);
                                 lollipop_found = 0;
-                                odds = draw_odds(window,nb_sticks,lollipop_found);
+                                odds = draw_odds(window,nb_broccolis,lollipop_found);
                                 game_started = 0;
 
                             }
@@ -83,24 +80,24 @@ int main(int argc, char *argv[]) {
                         } else {
                             cash=cash-chips[compteur_mise];
                             draw_account(window, cash);
-                            restart_game_layout(window, &buttons, &grid, nb_sticks);
+                            restart_game_layout(window, &buttons, &grid, nb_broccolis);
                             game_started = 1;
                         }
                     }  
                     // Vérifier si le clic a eu lieu sur le bouton + des broccolis
-                    if (check_increase_button_click(window, &buttons.increase_button, x, y, nb_sticks)) {
+                    if (check_increase_button_click(window, &buttons.increase_button, x, y, nb_broccolis)) {
                         if (!game_started) {
-                            ++nb_sticks;
-                            draw_sticks(window,nb_sticks);
-                            draw_odds(window,nb_sticks,lollipop_found);
+                            ++nb_broccolis;
+                            draw_broccolis(window,nb_broccolis);
+                            draw_odds(window,nb_broccolis,lollipop_found);
                         }
                     } 
                     // Vérifier si le clic a eu lieu sur le bouton - des broccolis
-                    if (check_decrease_button_click(window, &buttons.decrease_button, x, y, nb_sticks)) {
+                    if (check_decrease_button_click(window, &buttons.decrease_button, x, y, nb_broccolis)) {
                         if (!game_started) {
-                            --nb_sticks;
-                            draw_sticks(window,nb_sticks);
-                            draw_odds(window,nb_sticks,lollipop_found);
+                            --nb_broccolis;
+                            draw_broccolis(window,nb_broccolis);
+                            draw_odds(window,nb_broccolis,lollipop_found);
                         }
                     }
                     // Vérifier si le clic a eu lieu sur le bouton + de la mise
@@ -120,17 +117,17 @@ int main(int argc, char *argv[]) {
 
                     // Vérifier si le clic a eu lieu dans l'un des carrés
                     if (game_started) {
-                        int stop = check_square_click(window, &grid, x, y,lollipop_found,nb_sticks);
+                        int stop = check_square_click(window, &grid, x, y,lollipop_found,nb_broccolis);
                         if (stop==CONTINUE) {
                             ++lollipop_found; 
-                            odds = draw_odds(window,nb_sticks,lollipop_found);
+                            odds = draw_odds(window,nb_broccolis,lollipop_found);
                         }
                        
                         if (stop==STOP) {
                             finish_game_layout(window, &buttons, &grid);
                             lollipop_found = 0;
-                            update_history(&head, &tail, chips[compteur_mise], nb_sticks, odds, cash);
-                            odds = draw_odds(window,nb_sticks,lollipop_found);
+                            update_history(&head, &tail, chips[compteur_mise], nb_broccolis, odds, cash);
+                            odds = draw_odds(window,nb_broccolis,lollipop_found);
                             game_started = 0;
                         }
                     }
@@ -141,6 +138,7 @@ int main(int argc, char *argv[]) {
     SDL_RenderPresent(window->renderer);
     }
 
+    // Sauvegarde des différentes stats de la partie dans Score.txt
     SaveGames(head, "Score.txt");
 
     // Nettoyer les ressources utilisées

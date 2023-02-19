@@ -1,5 +1,6 @@
-#include "SDL2\include\SDL2\squares.h"
-#include "SDL2\include\SDL2\buttons.h"
+#include "SDL2/include/SDL2/squares.h"
+#include "SDL2/include/SDL2/buttons.h"
+#include "SDL2/include/SDL2/SDL_image.h"
 #include <stdio.h>
 
 void init_grid(GameGrid* grid, Window *window) {
@@ -19,13 +20,13 @@ void init_grid(GameGrid* grid, Window *window) {
     }
 }
 
-void randomizer(GameGrid* grid, int nb_sticks) {
+void randomizer(GameGrid* grid, int nb_broccolis) {
     for(int i = 0; i < NUM_LOLLIPOP; i++) {
         grid->grid[i]->score = WIN;
     }
 
     srand(time(NULL));
-    for(int i = 0; i < nb_sticks; i++) {
+    for(int i = 0; i < nb_broccolis; i++) {
         int tirage = rand() % NUM_LOLLIPOP;
         while(grid->grid[tirage]->score == LOSE){
             tirage = rand() % NUM_LOLLIPOP;
@@ -52,7 +53,7 @@ void draw_squares(Window *window, GameGrid* grid, const char* file_path) {
     }
 }
 
-int check_square_click(Window* window, GameGrid* grid, int x_click, int y_click,int lollipop_found,int nb_sticks) {
+int check_square_click(Window* window, GameGrid* grid, int x_click, int y_click,int lollipop_found,int nb_broccolis) {
     for(int i = 0; i < NUM_LOLLIPOP; i++) {
         GameSquare* current_square = grid->grid[i];
         if (x_click >= current_square->square.x && x_click <= current_square->square.x + window->square &&
@@ -73,10 +74,7 @@ int check_square_click(Window* window, GameGrid* grid, int x_click, int y_click,
                 SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer, picture);
                 SDL_RenderCopy(window->renderer, texture, NULL, &current_square->square);
                 SDL_RenderPresent(window->renderer);
-                // ++lollipop_found; 
-                // draw_odds(window,nb_sticks,lollipop_found);
-
-
+             
                 return CONTINUE;
             }
         }

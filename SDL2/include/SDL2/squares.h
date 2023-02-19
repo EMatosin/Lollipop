@@ -33,13 +33,13 @@ typedef struct {
 
 void init_grid(GameGrid* grid, Window *window);
 
-void randomizer(GameGrid* grid, int nb_sticks);
+void randomizer(GameGrid* grid, int nb_broccolis);
 
 void free_grid(GameGrid* grid);
 
 void draw_squares(Window *window, GameGrid* grid, const char* file_path);
 
-int check_square_click(Window* window, GameGrid* grid, int x_click, int y_click,int lollipop_found,int nb_sticks);
+int check_square_click(Window* window, GameGrid* grid, int x_click, int y_click,int lollipop_found,int nb_broccolis);
 
 void reveal_all(Window* window, GameGrid* grid);
 

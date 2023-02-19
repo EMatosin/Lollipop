@@ -1,11 +1,13 @@
-#include "SDL2\include\SDL2\history.h"
+#include "SDL2/include/SDL2/history.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
-GameHistory* create_history(int bet, int nb_sticks, float odds, float total) {
+GameHistory* create_history(int bet, int nb_broccolis, float odds, float total) {
     GameHistory* hist = malloc(sizeof(GameHistory));
     hist->bet = bet;
-    hist->nb_sticks = nb_sticks;
+    hist->nb_broccolis = nb_broccolis;
     hist->odds = odds;
     hist->total = total;
     hist->next = NULL;
@@ -13,8 +15,8 @@ GameHistory* create_history(int bet, int nb_sticks, float odds, float total) {
     return hist;
 }
 
-void update_history(GameHistory** head, GameHistory** tail, int bet, int nb_sticks, float odds, float total) {
-    GameHistory* hist = create_history(bet, nb_sticks, odds, total);
+void update_history(GameHistory** head, GameHistory** tail, int bet, int nb_broccolis, float odds, float total) {
+    GameHistory* hist = create_history(bet, nb_broccolis, odds, total);
 
     if (*head == NULL) {
         *head = hist;
@@ -39,14 +41,25 @@ void free_list(GameHistory* head) {
 }
 
 void SaveGames(GameHistory* head, const char *filename) {
-    FILE *file = fopen(filename, "w");
+    FILE *file;
+    if (access(filename, F_OK) != -1){
+        //l'historique existe déjà, on ouvre en mode "append"
+        file = fopen(filename,"a");
+    } else {
+        // c'est la première fois qu'on joue au jeu, on ouvre en mode "write"
+        file = fopen(filename, "w");
+        fprintf(file, "Montant parié :\t\t");
+        fprintf(file, "Nombre de broccolis choisis :\t\t");
+        fprintf(file, "Multiplicateur final :\t\t");
+        fprintf(file, "Montant amassé :\n\n");
+    }
     if (file != NULL) {
         GameHistory *current = head;
         while (current != NULL) {
-            fprintf(file, "Montant parié : %d $\n", current->bet);
-            fprintf(file, "Nombre de broccolis choisis : %d\n", current->nb_sticks);
-            fprintf(file, "Multiplicateur final : X%.2f\n", current->odds);
-            fprintf(file, "Montant amassé : %.2f $\n\n", current->total);
+            fprintf(file, "\t %d $", current->bet);
+            fprintf(file, "\t\t\t\t\t%d\t\t", current->nb_broccolis);
+            fprintf(file, "\t\t\t X%.2f", current->odds);
+            fprintf(file, "\t\t\t\t%.2f $\n", current->total);
             current = current->next;
         }
         fclose(file);

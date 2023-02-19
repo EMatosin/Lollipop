@@ -2,7 +2,7 @@
 #include "SDL2\include\SDL2\buttons.h"
 #include "SDL2\include\SDL2\SDL_ttf.h"
 
-void create_layout(Window *window, GameButtons* buttons, int nb_sticks, int mise, float cash, int lollipop_found){
+void create_layout(Window *window, GameButtons* buttons, int nb_broccolis, int mise, float cash, int lollipop_found){
     /*layout window*/
     SDL_Rect window_bg = {0, 0, window->width, window->height};
     SDL_Surface* picture = SDL_LoadBMP("images/lollipop_background.bmp");
@@ -86,9 +86,9 @@ void create_layout(Window *window, GameButtons* buttons, int nb_sticks, int mise
 
     /*affichage des menus avec chiffres variables*/
     draw_account(window, cash);
-    draw_sticks(window, nb_sticks);
+    draw_broccolis(window, nb_broccolis);
     draw_chips(window, mise);
-    draw_odds(window,nb_sticks, lollipop_found);
+    draw_odds(window,nb_broccolis, lollipop_found);
 
     /*bet button*/
     buttons->bet_button.x = window->width/10;
@@ -126,10 +126,10 @@ void create_layout(Window *window, GameButtons* buttons, int nb_sticks, int mise
     draw_lower(window, &buttons->lower_bet);
 }
 
-void restart_game_layout(Window *window, GameButtons* buttons, GameGrid* grid, int nb_sticks) {
+void restart_game_layout(Window *window, GameButtons* buttons, GameGrid* grid, int nb_broccolis) {
     draw_squares(window, grid, "images/start.bmp");
     draw_cash_out(window, &buttons->bet_button);
-    randomizer(grid, nb_sticks);
+    randomizer(grid, nb_broccolis);
 }
 
 void finish_game_layout(Window *window, GameButtons* buttons, GameGrid* grid) {

@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "SDL2\include\SDL2\SDL_ttf.h"
-#include "SDL2\include\SDL2\window.h"
-#include "SDL2\include\SDL2\buttons.h"
+#include "SDL2/include/SDL2/SDL_ttf.h"
+#include "SDL2/include/SDL2/SDL_image.h"
+#include "SDL2/include/SDL2/window.h"
+#include "SDL2/include/SDL2/buttons.h"
 
 void draw_account(Window* window, float cash) {
     // Affichage de l'argent en banque
@@ -52,8 +53,8 @@ float draw_odds(Window* window, int stick, int lollipop_found) {
 
 }
 
-void draw_sticks(Window* window, int stick) {
-    // Affichage du nombre de sticks
+void draw_broccolis(Window* window, int stick) {
+    // Affichage du nombre de broccolis
     SDL_Rect select_stick = {window->width/10+window->square, 2.95*window->height/4, 1.8*window->square, window->square};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &select_stick);
@@ -62,20 +63,20 @@ void draw_sticks(Window* window, int stick) {
 
     char buffer[3];    
     sprintf(buffer,"%d", stick);
-	SDL_Surface* sticks_surf = TTF_RenderText_Blended(font, buffer, pink);
+	SDL_Surface* broccolis_surf = TTF_RenderText_Blended(font, buffer, pink);
 
 	int texW = 0;
 	int texH = 0;
-	SDL_Texture* sticks_txt = SDL_CreateTextureFromSurface(window->renderer, sticks_surf);
-	SDL_QueryTexture(sticks_txt, NULL, NULL, &texW, &texH);
+	SDL_Texture* broccolis_txt = SDL_CreateTextureFromSurface(window->renderer, broccolis_surf);
+	SDL_QueryTexture(broccolis_txt, NULL, NULL, &texW, &texH);
 	SDL_Rect dstrect = {window->width/10 + 1.65*window->square,2.88*window->height/4, texW, texH};
-	SDL_RenderCopy(window->renderer, sticks_txt, NULL, &dstrect);
+	SDL_RenderCopy(window->renderer, broccolis_txt, NULL, &dstrect);
 	SDL_RenderPresent(window->renderer);
 
 }
 
 void draw_chips(Window* window, int mise) {
-    // Affichage du nombre de sticks
+    // Affichage du nombre de broccolis
     SDL_Rect select_chips = {window->width/2+3*window->square, 2.95*window->height/4, 2.5*window->square, window->square};
     SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(window->renderer, &select_chips);
@@ -84,14 +85,14 @@ void draw_chips(Window* window, int mise) {
 
     char buffer[5];
     sprintf(buffer,"%d", mise);
-	SDL_Surface* sticks_surf = TTF_RenderText_Blended(font, buffer, pink);
+	SDL_Surface* broccolis_surf = TTF_RenderText_Blended(font, buffer, pink);
 
 	int texW = 0;
 	int texH = 0;
-	SDL_Texture* sticks_txt = SDL_CreateTextureFromSurface(window->renderer, sticks_surf);
-	SDL_QueryTexture(sticks_txt, NULL, NULL, &texW, &texH);
+	SDL_Texture* broccolis_txt = SDL_CreateTextureFromSurface(window->renderer, broccolis_surf);
+	SDL_QueryTexture(broccolis_txt, NULL, NULL, &texW, &texH);
 	SDL_Rect dstrect = {window->width/2+3.5*window->square, 2.85*window->height/4, texW, texH};
-	SDL_RenderCopy(window->renderer, sticks_txt, NULL, &dstrect);
+	SDL_RenderCopy(window->renderer, broccolis_txt, NULL, &dstrect);
 	SDL_RenderPresent(window->renderer);
 
 }
@@ -169,20 +170,20 @@ int check_bet_button_click(Window* window, SDL_Rect* bet_button, int x_click, in
     return 0;
 }
 
-int check_increase_button_click(Window* window, SDL_Rect* increase_button, int x_click, int y_click, int nb_sticks) {
+int check_increase_button_click(Window* window, SDL_Rect* increase_button, int x_click, int y_click, int nb_broccolis) {
     if (x_click >= increase_button->x && x_click <= increase_button->x + increase_button->w &&
         y_click >= increase_button->y && y_click <= increase_button->y + increase_button->h &&
-        nb_sticks < NUM_LOLLIPOP-1) {
+        nb_broccolis < NUM_LOLLIPOP-1) {
         return 1;
     }
 
     return 0;
 }
 
-int check_decrease_button_click(Window* window, SDL_Rect* decrease_button, int x_click, int y_click, int nb_sticks) {
+int check_decrease_button_click(Window* window, SDL_Rect* decrease_button, int x_click, int y_click, int nb_broccolis) {
     if (x_click >= decrease_button->x && x_click <= decrease_button->x + decrease_button->w &&
         y_click >= decrease_button->y && y_click <= decrease_button->y + decrease_button->h &&
-        nb_sticks > 1) {
+        nb_broccolis > 1) {
         return 1;
         
     } 
